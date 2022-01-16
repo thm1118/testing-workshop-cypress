@@ -1,27 +1,27 @@
-## ☀️ Part 4: Reset state data
+## ☀️ 第4部分: 重置状态数据
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how one test can affect another test by leaving its data behind
-- when and how to reset state during testing
-
-+++
-
-- keep `todomvc` app running
-- open `cypress/integration/04-reset-state/spec.js`
-- if you reload the test it starts failing 😕
+- 一个测试如何通过留下它的数据来影响另一个测试
+- 测试期间何时以及如何重置状态
 
 +++
 
-![First test run](./img/passing-test.png)
+- 保持 `todomvc` app 运行
+- 打开 `cypress/integration/04-reset-state/spec.js`
+- 如果您再次加载测试，它就会失败 😕
 
 +++
 
-![Second test run](./img/failing-test.png)
+![第一次测试运行](./img/passing-test.png)
 
 +++
 
-![Inspect first XHR call](./img/inspect-first-get-todos.png)
+![第二次测试运行](./img/failing-test.png)
+
++++
+
+![检查XHR第一次调用](./img/inspect-first-get-todos.png)
 
 +++
 
@@ -41,42 +41,42 @@ it('adds two items', () => {
 
 +++
 
-## Questions
+## 提问
 
-- how to reset the database?
-  - **tip** we are using [json-server-reset](https://github.com/bahmutov/json-server-reset#readme) middleware
-  - try to reset it from command line
+- 如何重置数据库?
+  - **提示** 我们当前使用的是 [json-server-reset](https://github.com/bahmutov/json-server-reset#readme) middleware
+  - 尝试从命令行重置它
 
 ```
 $ http POST :3000/reset todos:=[]
 ```
 
-Note:
-I am using httpie to easily send the empty list to reset the database.
+注意:
+我使用 httpie 发送空列表，来轻松重置数据库.
 
 +++
 
-- how to make an arbitrary cross-domain XHR request from Cypress?
-- reset the database before each test
-  - modify `04-reset-state/spec.js` to make XHR call to reset the database
-  - before or after `cy.visit`?
+- 如何在Cypress中发起使任意跨域XHR请求 ?
+- 每次测试前重置数据库
+  - 修改 `04-reset-state/spec.js` 调用XHR重置数据库
+  - 在 `cy.visit` 之前还是之后 ?
 
-Note:
-Students should modify `cypress/integration/04-reset-state/spec.js` and make the request to reset the database before each test using `cy.request`.
+注意:
+学生应该修改 `cypress/integration/04-reset-state/spec.js` 并在每次测试使用之前`before` ，使用`cy.request`重置数据库.
 
-The answer to this and other TODO assignments are in [cypress/integration/04-reset-state/answer.js](/cypress/integration/04-reset-state/answer.js) file.
+这个和其他TODO作业的答案在里面 [cypress/integration/04-reset-state/answer.js](/cypress/integration/04-reset-state/answer.js) .
 
 +++
-## Using cy.writeFile
+## 使用 cy.writeFile
 
 ```
 "start": "json-server --static . --watch data.json"
 ```
 
-If we overwrite `todomvc/data.json` and reload the web app we should see new data
+如果我们覆盖 `todomvc/data.json` 并重启 应用，可以看到新数据
 
 +++
-## TODO: use cy.writeFile to reset todos
+## 尝试: 使用 cy.writeFile 来重置所有事项
 
 ```js
 describe('reset data using cy.writeFile', () => {
@@ -88,20 +88,20 @@ describe('reset data using cy.writeFile', () => {
 })
 ```
 
-See [`cy.writeFile`](https://on.cypress.io/writefile)
+查看 [`cy.writeFile`](https://on.cypress.io/writefile)
 
 +++
-Make sure you are writing the right file.
+确保您正在编写正确的文件.
 
-![See the file path written](./img/write-file-path.png)
+![参见写入的文件路径](./img/write-file-path.png)
 
-Note:
-Most common mistake is using file path relative to the spec file, should be relative to the project's root folder.
+注意:
+最常见的错误是使用相对于spec文件的文件路径, 应该是相对于项目的根目录.
 
 +++
-## Using cy.task
+## 使用 cy.task
 
-You can execute Node code during browser tests by calling [`cy.task`](https://on.cypress.io/task)
+您可以通过调用 [`cy.task`](https://on.cypress.io/task) 来在浏览器测试期间执行Node代码
 
 ```js
 // cypress/plugins/index.js
@@ -118,9 +118,9 @@ cy.task('hello', 'World')
 ```
 
 +++
-## TODO reset data using cy.task
+## 尝试： 使用 cy.task重置数据
 
-Find "resetData" task in cypress/plugins/index.js
+在cypress/plugins/index.js 中 查找 "resetData" 任务 
 
 ```js
 describe('reset data using a task', () => {
@@ -132,9 +132,9 @@ describe('reset data using a task', () => {
 ```
 
 +++
-## TODO set data using cy.task
+## 尝试 使用 cy.task 设置数据
 
-Pass an object when calling `cy.task('resetData')`
+调用 `cy.task('resetData')` 时，传入对象
 
 ```js
 it('sets data to complex object right away', () => {
@@ -145,9 +145,9 @@ it('sets data to complex object right away', () => {
 ```
 
 +++
-## TODO set data from fixture
+## 尝试 用 fixture 设置数据
 
-Pass an object when calling `cy.task('resetData')`
+调用 `cy.task('resetData')` 时，传入对象
 
 ```js
 it('sets data using fixture', () => {
@@ -160,9 +160,9 @@ it('sets data using fixture', () => {
 
 +++
 
-## Best practices
+## 最佳实践
 
-- reset state before each test
-  - in our [Best practices guide](https://on.cypress.io/best-practices)
-- use [`cy.request`](https://on.cypress.io/request), [`cy.exec`](https://on.cypress.io/exec), [`cy.task`](https://on.cypress.io/task)
-- watch presentation "Cypress: beyond the Hello World test" [https://slides.com/bahmutov/cypress-beyond-the-hello-world](https://slides.com/bahmutov/cypress-beyond-the-hello-world)
+- 每次测试前重置状态
+  - 我们的 [最佳实践指南](https://on.cypress.io/best-practices)
+- 使用 [`cy.request`](https://on.cypress.io/request), [`cy.exec`](https://on.cypress.io/exec), [`cy.task`](https://on.cypress.io/task)
+- 观看演示 "Cypress: 超越 Hello World测试" [https://slides.com/bahmutov/cypress-beyond-the-hello-world](https://slides.com/bahmutov/cypress-beyond-the-hello-world)

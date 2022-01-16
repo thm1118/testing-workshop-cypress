@@ -1,16 +1,16 @@
-## ☀️ Part 1: Basic tests
+## ☀️ 第1部分: 基础测试
 
-### 📚 You will learn
+### 📚 您将学习
 
-- `cy.contains` and command retries
-- two ways to run Cypress
-- screenshots and video recording
+- `cy.contains` 和命令重试
+- Cypress有两种运行方式
+- 截屏和录屏
 
 +++
 
-- keep `todomvc` app running
-- open Cypress from the root folder with `npm run cy:open`
-- click on `01-basic/spec.js`
+- 保持`todomvc`应用程序运行
+- 从根目录上 运行`npm run cy:open` 打开Cypress
+- 点击  `01-basic/spec.js`
 
 ```js
 /// <reference types="cypress" />
@@ -22,73 +22,73 @@ it('loads', () => {
 
 +++
 
-`cy.contains('h1', 'Todos App')` is not working 😟
+`cy.contains('h1', 'Todos App')` 运行失败了  😟
 
-Note:
-This is a good moment to show how Cypress stores DOM snapshots and shows them for each step.
+注意:
+现在是展示Cypress如何存储DOM快照并为每个步骤显示快照的好时机.
 
 +++
 
-## Questions 1/3
+## 提问 1/3
 
 @ul
-- where are the docs for `cy.contains` command?
-- why is the command failing?
-  - **hint**: use DevTools
-- can you fix this?
+-  `cy.contains` 命令的 说明文档在哪里 ?
+- 为什么命令执行失败 ?
+  - **提示**: 使用 DevTools
+- 你能解决吗 ?
 @ulend
 
 +++
 
-## Questions 2/3
+## 提问 2/3
 
 @ul
-- do you see the command retrying (blue spinner)?
-- use `timeout` option to force the command to try for longer
+- 您看到命令重试了吗 (蓝色的转轮)?
+- 使用`timeout` 选项强制命令尝试更长时间
 @ulend
 
 +++
 
-## Cypress has 2 commands
+## Cypress 运行有两个命令
 
 - `cypress open`
 - `cypress run`
 
 +++
 
-## How to?
+## 如何……?
 
-- run just this spec `cypress/integration/01-basic/spec.js` in headless mode?
+- run 让测试  `cypress/integration/01-basic/spec.js` 在无头模式中运行?
 
-Hint: `npx cypress run --help`
-
-+++
-
-## Bonus
-
-**Todo:** use `cypress run` with a failing test.
-
-- video recording [https://on.cypress.io/configuration#Videos](https://on.cypress.io/configuration#Videos)
-- `cy.screenshot` command
+提示: `npx cypress run --help`
 
 +++
 
-## Fix the test
+## 意外收获
 
-- can you fix the test?
-- how would you select an element:
+**待办:** 使用 `cypress run`运行一个失败的测试.
+
+- 视频录制 [https://on.cypress.io/configuration#Videos](https://on.cypress.io/configuration#Videos)
+- `cy.screenshot` 命令
+
++++
+
+## 修正测试
+
+- 你能修改测试吗?
+- 如何选择一个元素:
   - by text
   - by id
   - by class
   - by attributes
 
-**Tip:** https://on.cypress.io/best-practices#Selecting-Elements
+**提示:** https://on.cypress.io/best-practices#Selecting-Elements
 
 +++
-## 🏁 Conclusions
+## 🏁 总结
 
-- most commands retry
-- run Cypress in headless mode on CI with `cypress run`
-- screenshots and videos
+- 大多数命令会重试
+- 在CI模式下下 用无头模式运行Cypress `cypress run`
+- 截屏和录屏
 
-➡️ Pick the [next section](https://github.com/cypress-io/testing-workshop-cypress#content-)
+➡️ 选择 [下一节](https://github.com/cypress-io/testing-workshop-cypress#content-)

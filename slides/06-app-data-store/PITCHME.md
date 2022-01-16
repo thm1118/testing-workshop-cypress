@@ -1,32 +1,31 @@
-## ☀️ Part 6: Application data store
+## ☀️ 第6部分: 应用程序数据存储
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to access the running application from test code
-- how to stub a method in the application
-- how to drive application by dispatching actions
-
-+++
-
-- keep `todomvc` app running
-- open `cypress/integration/06-app-data-store/spec.js`
-- test that Vuex data store is working correctly
+- 如何从测试代码访问正在运行的应用程序
+- 如何在应用程序中模拟一个方法
+- 如何通过分派操作驱动应用程序
 
 +++
 
-## Application object
+- 保持 `todomvc` app 运行
+- 打开 `cypress/integration/06-app-data-store/spec.js`
+- 测试 Vuex data store 正确工作
+
++++
+
+## 应用程序对象
 
 ```javascript
-// if you want to expose "app" globally only
-// during end-to-end tests you can guard it using "window.Cypress" flag
-// if (window.Cypress) {
-window.app = app
-// }
+// 如果仅仅在端到端测试中暴露  "app" 全局访问，可以使用 "window.Cypress"作为条件
+if (window.Cypress) {
+   window.app = app
+}
 ```
 
 +++
 
-## Todo: check Vuex state
+## 尝试: check Vuex state
 
 ```javascript
 it('adds items to store', () => {
@@ -44,19 +43,19 @@ it('adds items to store', () => {
 
 +++
 
-## Non-determinism
+## 不确定性
 
-- random data in tests makes it very hard
-- UUIDs, dates, etc
-- Cypress includes XHR and method stubbing using [http://sinonjs.org/](http://sinonjs.org/)
+- 测试中的随机数据使测试变得非常困难
+- 比如 UUIDs, dates
+- Cypress 包括XHR和方法模拟 使用 [http://sinonjs.org/](http://sinonjs.org/)
 - [https://on.cypress.io/stubs-spies-and-clocks](https://on.cypress.io/stubs-spies-and-clocks)
 
 +++
 
-## Questions
+## 问题
 
-- how does a new item get its id?
-- can you override random id generator from DevTools?
+- 一个新事项如何获得它的id?
+- 你能覆盖DevTools中的随机id生成器吗?
 
 +++
 
@@ -66,60 +65,60 @@ it('adds items to store', () => {
 
 +++
 
-## Application under test
+## 测试中的应用程序
 
 ![Application under test](./img/app-in-window.png)
 
 +++
 
-## Stub application's random generator
+## 模拟 应用的随机生成器
 
-- test "creates an item with id 1" in `06-app-data-store/spec.js`
-- get the application's context using `cy.window`
-- get application's `window.Math` object
-- can you stub application's random generator?
-  - **hint** use `cy.stub`
-
-+++
-
-## Confirm spy's behavior
-
-- test "creates an item with id using a stub"
-- write a test that adds 1 item
-- name spy with an alias `cy.spy(...).as('name')`
-- get the spy using the alias and confirm it was called once
+- 在 `06-app-data-store/spec.js`的测试 "creates an item with id 1" 
+- 使用 `cy.window`获取应用程序的上下文；
+- 获得应用的 `window.Math` 对象
+- 你能模拟应用程序的随机生成器吗?
+  - **提示 ** 使用 `cy.stub`
 
 +++
 
-## Application data store
+## 监视 确认行为
 
-- inspect in DevTools 'window.app' variable
-- can you find the items in the data store as they are added?
-  - **hint** you might need 'JSON.parse(JSON.stringify(...))' to get a "simple" object
-
-Note:
-Our goal is to show that anything one can do from the DevTools can be done from the end-to-end tests using `cy.window` to get to the application's window. Application code can even expose some objects during testing using `if (window.Cypress) ...` conditions.
+- 测试 "creates an item with id using a stub"
+- 编写一个添加1项的测试
+- 用别名命名监视 `cy.spy(...).as('name')`
+- 找到那个用别名的监视器，确认他被调用了一次
 
 +++
 
-## Todo
+## 应用数据存储
 
-Write a test that:
+- 在DevTools的窗口中检查'window.app' 变量
+- 您能否在数据存储中找到添加的事项 ?
+  - **提示** 你可能需要'JSON.parse(JSON.stringify(...))' 来获得一个 "simple"对象
 
-- adds 2 todos
-- gets the data store
-- confirms the objects in the data store
+注意:
+我们的目标是表明，任何可以通过DevTools完成的工作都可以在端到端测试中通过 通过使用`cy.window` 进入应用程序来完成. 应用程序代码甚至可以在测试期间使用 `if (window.Cypress) ...`这样的条件.
 
 +++
 
-## Advanced
+## 尝试
 
-Write a test that:
+编写一个测试:
 
-- dispatches actions to the store to add items
-- confirms new items are added to the DOM
+- 添加2个 事项
+- 获取数据存储
+- 对数据存储中的对象进行确认
 
-(see next slide)
++++
+
+## 高级
+
+编写一个测试:
+
+- 将操作分派到存储以添加项
+- 确认新的事项被添加到DOM中
+
+(看到下一张幻灯片)
 +++
 
 ```js
@@ -136,11 +135,11 @@ it('adds todos via app', () => {
 ```
 
 +++
-## Todo: test edge data case
+## 尝试: 测试边界数据
 
 ```js
 it('handles todos with blank title', () => {
-  // add todo that the user cannot add via UI
+  // 添加用户不能通过UI添加的 空白数据
   cy.window()
     .its('app.$store')
     .invoke('dispatch', 'setNewTodo', '  ')
@@ -151,9 +150,9 @@ it('handles todos with blank title', () => {
 
 +++
 
-### ⚠️ Watch out for stale data
+### ⚠️ 注意陈旧的数据
 
-Note that the web application might NOT have updated the data right away. For example:
+请注意，web应用程序可能没有立即更新数据。例如:
 
 ```js
 getStore().then(store => {
@@ -161,18 +160,18 @@ getStore().then(store => {
   store.dispatch('addTodo')
   store.dispatch('clearNewTodo')
 })
-// not necessarily has the new item right away
+// 不一定马上就有新事项
 getStore().its('state')
 ```
 
-Note:
-In a flaky test https://github.com/cypress-io/cypress-example-recipes/issues/246 the above code was calling `getStore().its('state').snapshot()` sometimes before and sometimes after updating the list of todos.
+注意:
+在一个不可靠的测试中 https://github.com/cypress-io/cypress-example-recipes/issues/246 以上代码调用 `getStore().its('state').snapshot()` 在更新待办事项列表的前后都被调用了几次.
 
 +++
 
-### ⚠️ Watch out for stale data
+### ⚠️ 注意陈旧的数据
 
-**Solution:** confirm the data is ready before using it.
+**解决办法:** 使用前请确认数据已准备就绪.
 
 ```js
 // add new todo using dispatch
@@ -184,8 +183,8 @@ getStore()
 ```
 
 +++
-## 🏁 App Access
+## 🏁 应用程序访问
 
-- when needed, you can access the application directly from the test
+- 当需要时，您可以直接从测试中访问应用程序
 
-Read also: https://www.cypress.io/blog/2018/11/14/testing-redux-store/
+同时参阅: https://www.cypress.io/blog/2018/11/14/testing-redux-store/

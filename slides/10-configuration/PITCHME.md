@@ -1,43 +1,43 @@
-## ☀️ Part 10: Configuration
+## ☀️ 第10部分:配置
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to control Cypress parameters
-- how to pass environment variables to tests
+- 如何控制Cypress参数
+- 如何将环境变量传递给测试
 
 +++
 
-## Configuration settings
+## 配置能够设置
 
 - `baseUrl`
 - `env`
 - `reporter`
 - `video`
-- and many, many more
+- 以及非常多的选项
 
 +++
 
-Cypress options can be set via:
+Cypress 选项可以通过以下方式设置:
 - `cypress.json`
-- command line arguments
-- environment variables
-- in plugin code
-- at run-time
+- 命令行参数
+- 环境变量
+- 在插件代码中
+- 在运行时
 
 +++
 
-## Question
+## 问题
 
-> Where is the configuration documentation?
+> 配置文档在哪里?
 
-Note:
-You should find docs at [https://on.cypress.io/configuration](https://on.cypress.io/configuration)
+注意:
+你应该在 [https://on.cypress.io/configuration](https://on.cypress.io/configuration)中查找配置说明
 
 +++
 
 ## `cypress.json`
 
-Open `cypress.json` and check which options are set in this project.
+打开 `cypress.json` 并检查在这个项目中设置了哪些选项.
 
 ```json
 {
@@ -50,21 +50,21 @@ Open `cypress.json` and check which options are set in this project.
 
 +++
 
-**Tip:** if you have a lot of options to overwrite, use `--config-file <...>` argument to replace `cypress.json`.
+**提示:** 如果你有很多选项要覆盖, 使用 `--config-file <...>` 参数来替代 `cypress.json`.
 
 +++
 
-## `cypress.json` IntelliSense
+## `cypress.json` 编写时智能感知
 
-![`cypress.json` IntelliSense in VSCode](./img/cypress.json-intellisense.png)
+![`cypress.json`在VSCode智能感知](./img/cypress.json-intellisense.png)
 
-You can have IntelliSense in `cypress.json` in a modern editor, like VSCode.
+你可以在在现代编辑器中 智能感知方式编辑`cypress.json` ，比如VSCode.
 
 +++
 
 ## VSCode
 
-In the user settings, global or workspace set
+在用户设置、全局设置或工作空间设置中
 
 ```json
 {
@@ -77,13 +77,13 @@ In the user settings, global or workspace set
 }
 ```
 
-Read: [https://glebbahmutov.com/blog/json-schema-for-the-win/](https://glebbahmutov.com/blog/json-schema-for-the-win/)
+阅读: [https://glebbahmutov.com/blog/json-schema-for-the-win/](https://glebbahmutov.com/blog/json-schema-for-the-win/)
 
 +++
 
-## VSCode (alternative)
+## VSCode (可选)
 
-Add `$schema` property to `cypress.json`
+在 `cypress.json`中添加 `$schema`属性
 
 ```json
 {
@@ -95,28 +95,28 @@ Add `$schema` property to `cypress.json`
 }
 ```
 
-Read: [https://glebbahmutov.com/blog/json-schema-for-the-win/](https://glebbahmutov.com/blog/json-schema-for-the-win/)
+阅读: [https://glebbahmutov.com/blog/json-schema-for-the-win/](https://glebbahmutov.com/blog/json-schema-for-the-win/)
 
 +++
 
-## command line arguments
+## 命令行参数
 
-You can override default and `cypress.json` settings using `--config` flag
+使用 `--config` flag，可以覆盖默认 `cypress.json` 配置 
 
 ```shell
 npx cypress open \
   --config baseUrl=http://todomvc.com/examples/dojo/,defaultCommandTimeout=10000
 ```
 
-Note:
-Try running `cypress/integration/02-adding-items/demo.js` spec.
-Commonly used with `cypress run` command (specific spec, longer timeouts)
+注意:
+尝试运行 `cypress/integration/02-adding-items/demo.js` spec.
+通常使用 `cypress run` 命令 (specific spec, longer timeouts)
 
 +++
 
 ## package scripts
 
-**Warning ⚠️** if you start Cypress via NPM package scripts, use `--` to add CLI arguments.
+**警告 ⚠️** 如果你通过NPM包脚本启动Cypress, 使用 `--` 来添加命令行参数.
 
 ```json
 {
@@ -133,9 +133,9 @@ npm run cy:run -- --config baseUrl=http://todomvc.com/examples/dojo/
 
 +++
 
-## environment variables
+## 环境变量
 
-You can override `cypress.json` settings using environment variables that start with `CYPRESS_`
+通过以`CYPRESS_`起头的环境变量可覆盖 `cypress.json` 配置 
 
 ```shell
 CYPRESS_baseUrl=http://todomvc.com/examples/dojo/ npx cypress open
@@ -143,14 +143,14 @@ CYPRESS_baseUrl=http://todomvc.com/examples/dojo/ npx cypress open
 CYPRESS_BASE_URL=http://todomvc.com/examples/dojo/ npx cypress open
 ```
 
-Note:
-`cypress.json` < environment variables < CLI parameter
+注意: 优先级
+`cypress.json` < 环境变量 < CLI参数
 
 +++
 
-## environment variables
+## 环境变量
 
-Use environment variables on CI. Especially to pass the private record key!
+在CI上使用环境变量. 特别是传递私有record密钥!
 
 ```shell
 # bad practice, can accidentally show up in STDOUT
@@ -162,9 +162,9 @@ npx cypress run --record
 
 +++
 
-## plugin code
+## 插件代码
 
-In `cypress/plugins/index.js`
+在 `cypress/plugins/index.js`中
 
 ```js
 module.exports = (on, config) => {
@@ -174,13 +174,13 @@ module.exports = (on, config) => {
 }
 ```
 
-Docs: [https://on.cypress.io/configuration-api](https://on.cypress.io/configuration-api)
+文档: [https://on.cypress.io/configuration-api](https://on.cypress.io/configuration-api)
 
 +++
 
-## plugin code
+## 插件代码
 
-You can return a resolved config as a promise.
+您可以返回一个已解析的配置作为承诺。
 
 ```js
 module.exports = (on, config) => {
@@ -193,9 +193,9 @@ module.exports = (on, config) => {
 
 +++
 
-## Run-time configuration
+## 运行时配置
 
-You can change current setting _per spec_ using [Cypress.config](https://on.cypress.io/config) call.
+您可以使用[Cypress.config](https://on.cypress.io/config) 为每个spec 设置配置.
 
 ```js
 Cypress.config('baseUrl', 'http://todomvc.com/examples/dojo/')
@@ -205,40 +205,40 @@ beforeEach(function visitSite () {
 })
 ```
 
-Note:
-Use at your own risk, because the order of mutations and the final config in each test can be confusing.
+注意:
+使用风险由您自己承担，因为每个测试中的突变顺序和最终配置可能会令人困惑.
 
 +++
 
-## Resolved configuration
+## 解析的配置
 
 ![resolved configuration](./img/configuration.png)
 
 +++
 
-## Configuration precedence
+## 配置优先级
 
-`cypress.json` < environment variable < CLI parameter < plugin < run-time
+`cypress.json` < 环境变量 < CLI参数 < 插件 < 运行时
 
 +++
 
-## Todo
+## 尝试
 
-Run a single spec in headless mode against:
+在无头模式下运行一个spec:
 - `localhost`
 - `http://todomvc.com/examples/dojo/`
 
 +++
 
-## Environment variables
+## 环境变量s
 
-*That are not Cypress configuration* - username, passwords, etc.
+*这些不是Cypress的配置* - username, passwords, etc.
 
-Guide [https://on.cypress.io/environment-variables](https://on.cypress.io/environment-variables)
+指南 [https://on.cypress.io/environment-variables](https://on.cypress.io/environment-variables)
 
 +++
 
-## Environment variables
+## 环境变量
 
 ### `cypress.json` "env"
 
@@ -259,7 +259,7 @@ it('has env item', function () {
 
 +++
 
-## Environment variables
+## 环境变量
 
 ### `cypress.env.json`
 
@@ -270,22 +270,22 @@ it('has env item', function () {
 }
 ```
 
-Environment variables will be merged.
+环境变量将被合并。
 
 +++
 
-## Using env variables
+## 使用env变量
 
 ```js
 Cypress.env() // returns entire merged object
 Cypress.env(name) // returns single value
 ```
 
-See [https://on.cypress.io/env](https://on.cypress.io/env)
+查看 [https://on.cypress.io/env](https://on.cypress.io/env)
 
 +++
 
-## Todo: get deep property
+## 尝试: 获取深度属性
 
 Given `cypress.env.json`
 
@@ -297,16 +297,16 @@ Given `cypress.env.json`
 }
 ```
 
-Assert from the test that name is indeed `Joe`.
+从测试中断言该名称确实是`Joe`.
 
-Note:
-Use `Cypress._.get` or `cy.wrap(Cypress.env()).its('person.name')`
+注意:
+使用 `Cypress._.get` 或 `cy.wrap(Cypress.env()).its('person.name')`
 
 +++
 
-## Environment variables
+## 环境变量
 
-### command-line arguments
+### 命令行参数
 
 ```sh
 npx cypress open --env todoTitle="env todo",life=42
@@ -318,9 +318,9 @@ npx cypress open --env todoTitle="env todo",life=42
 
 +++
 
-## Todo
+## 尝试
 
-Pass an object via command-line argument and see it in the configuration
+通过命令行参数传递一个对象，并在配置中查看
 
 ```sh
 npx cypress open --env ???
@@ -328,16 +328,16 @@ npx cypress open --env ???
 
 +++
 
-## Environment variables
+## 环境变量
 
-### environment variables 🙂
+### 环境变量 🙂
 
 ```sh
 CYPRESS_todoTitle="env todo" CYPRESS_name=CyBot \
   npx cypress open
 ```
 
-Unknown `CYPRESS_` variables will be added to `env` object.
+未知的 `CYPRESS_` 变量将被添加到 `env` 对象.
 
 +++
 
@@ -345,9 +345,9 @@ Unknown `CYPRESS_` variables will be added to `env` object.
 
 +++
 
-## Environment variables
+## 环境变量
 
-### plugin
+### 插件
 
 ```js
 module.exports = (on, config) => {
@@ -358,9 +358,9 @@ module.exports = (on, config) => {
 
 +++
 
-## Environment variables
+## 环境变量
 
-### run-time
+### 运行时
 
 ```js
 it('has env', () => {
@@ -376,9 +376,9 @@ it('has env', () => {
 
 +++
 
-## Environment variables
+## 环境变量
 
-🛑 Cannot change env variables at run-time using `Cypress.config('env', ...)`
+🛑 无法在运行时使用`Cypress.config('env', ...)` 更改环境变量 
 
 ```js
 it('has env', () => {
@@ -391,29 +391,29 @@ it('has env', () => {
 })
 ```
 
-✅ Always use `Cypress.env(name, value)` to change.
+✅ 总是使用 `Cypress.env(name, value)` 来改变环境变量.
 
 +++
 
-## Todo: per-environment config
+## 尝试: 为每个环节 配置
 
-Problem: let's create config settings per environment and load them using CLI argument.
+问题:让我们为每个环境创建配置设置，并使用CLI参数加载它们。
 
 ```sh
 npx cypress open --env staging
 npx cypress open --env prod
 ```
 
-Should load options from `configs/staging.json` or from `configs/prod.json`.
+应该从`configs/staging.json` 或 `configs/prod.json` 加载.
 
-Note:
-What options would you set in each JSON file?
-Would they be merged with other settings in `cypress.json`?
-Answer at https://on.cypress.io/configuration-api
+注意:
+你会在每个JSON文件中设置什么选项?
+它们会与 `cypress.json`中的其他设置合并吗??
+答案在  https://on.cypress.io/configuration-api
 
 +++
 
-## Summary
+## 总结
 
 + `--config-file <json filepath>`
 

@@ -1,13 +1,16 @@
-# Cypress Testing Workshop
+# Cypress 测试工作坊
 
 - [github.com/cypress-io/testing-workshop-cypress](https://github.com/cypress-io/testing-workshop-cypress)
 
-Jump to: [00-start](?p=00-start), [01-basic](?p=01-basic), [02-adding-items](?p=02-adding-items), [03-selector-playground](?p=03-selector-playground), [04-reset-state](?p=04-reset-state), [05-xhr](?p=05-xhr), [06-app-data-store](?p=06-app-data-store), [07-ci](?p=07-ci), [08-dashboard](?p=08-dashboard), [09-reporters](?p=09-reporters), [10-configuration](?p=10-configuration), [11-retry-ability](?p=11-retry-ability)
+跳转: [00-开始](?p=00-start), [01-基础](?p=01-basic), [02-添加条目](?p=02-adding-items), [03-选择器](?p=03-selector-playground), [04-重置状态](?p=04-reset-state), [05-xhr](?p=05-xhr), [06-应用数据存储](?p=06-app-data-store), [07-ci](?p=07-ci), [08-官方仪表盘](?p=08-dashboard), [09-报表](?p=09-reporters), [10-配置](?p=10-configuration), [11-重试能力](?p=11-retry-ability)
+, [12-自定义命令](?p=12-custom-commands), [13-app操作](?p=13-app-actions), [14-夹具](?p=14-fixtures), [15-调试](?p=15-debugging), [16-预处理器](?p=16-preprocessors)
+, [17-组件测试](?p=17-component-testing), [18-后端](?p=18-backend), [19-代码覆盖率](?p=19-code-coverage), [20-模拟](?p=20-stubbing)
+, [结尾](?p=end)
 
 +++
-## Gleb Bahmutov, PhD
+## Gleb Bahmutov 博士
 
-- Distinguished Engineer at Cypress
+- Cypress 杰出工程师 
 - gleb (at) cypress.io
 - [@bahmutov](https://twitter.com/bahmutov)
 - [https://glebbahmutov.com/blog/tags/cypress/](https://glebbahmutov.com/blog/tags/cypress/)
@@ -15,70 +18,70 @@ Jump to: [00-start](?p=00-start), [01-basic](?p=01-basic), [02-adding-items](?p=
 
 +++
 
-## What we are going to cover 1/3
+## 我们要讲的内容 1/3
 
-As long as ⏳ permits
+时长：⏳
 
-- example TodoMVC
+- 示例应用 TodoMVC
   * web app, data store, REST calls
-- basic page load test
-- selector playground
-- resetting state
-- XHR spying and stubbing, fixtures
+- 页面加载基本测试
+- 选择器 playground
+- 重置状态
+- XHR网络请求的 的 spying 和 stubbing, fixtures
 
 +++
 
-## What we are going to cover 2/3
+## 我们要讲的内容 2/3
 
-As long as ⏳ permits
+时长：⏳
 
-- CI and Cypress dashboard
-- test reporters
-- configuration and environment variables
-- retry-ability
+- CI 以及 Cypress 仪表盘
+- 测试报告
+- 配置和环境变量
+- 重试能力
 - debugging
-- visual testing
+- 视觉检测
 
 +++
-## What we are going to cover 3/3
+## 我们要讲的内容 3/3
 
-As long as ⏳ permits
+时长：⏳
 
-- page objects vs app actions
-- fixtures and backend
-- preprocessors
-- component testing
-- plugins
-- code coverage
+- 页面对象 vs 应用行为
+- fixtures 和 后端
+- 预处理器
+- 组件测试
+- 插件
+- 代码覆盖率
 
 +++
 
 ## Time 🕰
 
-- total workshop duration 3 - 9 hours, depending on the included sections
-- short breaks, lunch
+- 工作坊总时长 3 - 9小时, 取决于以下部分
+- 短暂休息,午餐
 
 +++
 
-Please: if you have experience with Cypress.io, help others during the workshop 🙏
+如果您有cypress 经验，请在研讨会期间帮助别人 🙏
 
 +++
 
-## How learning works
+## 如何有效学习
 
-1. I explain and show
-2. We do together
-3. You do and I help
+1. 我解释并展示
+2. 我们一起做
+3. 你做，我帮助
 
 +++
 
-## Requirements
+## 需求
 
-You will need:
+您将需要:
 
-- `git` to clone this repo
-- Node v10+ to install dependencies
-- Node v12 recommended
+- `git` 工具，用来clone代码库
+- Node v10+ 以上以安装依赖
+- Node v12 推荐
 
 ```text
 git clone <repo url>
@@ -88,86 +91,86 @@ npm install
 
 +++
 
-## Repo organization
+## 代码库的目录结构
 
-- `/todomvc` is a web application we are going to test
-- all tests are in `cypress/integration` folder
-  - there are subfolders for exercises
+- `/todomvc` 是我们用来测试的是web应用
+- 所有测试存储在 `cypress/integration` 文件夹
+  - 用来练习的子目录
     - `01-basic`
     - `02-adding-items`
     - `03-selector-playground`
     - `04-reset-state`
-    - etc
-- keep application `todomvc` running!
+    - 等等
+- 始终让 `todomvc` 保持运行!
 
-Note:
-We are going to keep the app running, while switching from spec to spec for each part.
+注意:
+当为每段课程切换测试脚本时，我们会让应用继续运行.
 
 +++
 
 ## `todomvc`
 
-Let us look at the application.
+让我们看看这个应用程序。
 
 - `cd todomvc`
 - `npm start`
 - `open localhost:3000`
 
-**important** keep application running through the entire workshop!
+**重要**在整个工作坊期间中保持应用程序运行!
 
 +++
 
-It is a regular TodoMVC application.
+这是一个常规的TodoMVC应用程序。
 
 ![TodoMVC](./img/todomvc.png)
 
 +++
 
-If you have Vue DevTools plugin
+如果你有Vue DevTools插件
 
 ![With Vue DevTools](./img/vue-devtools.png)
 
 +++
 
-Look at XHR when using the app
+当使用应用程序时，查看XHR
 
 ![Network](./img/network.png)
 
 +++
 
-Look at `todomvc/index.html` - main app DOM structure
+查看 `todomvc/index.html` - 主app DOM 结构
 
 ![DOM](./img/DOM.png)
 
 +++
 
-Look at `todomvc/app.js`
+查看 `todomvc/app.js`
 
 ![Application](./img/app.png)
 
 +++
 
-## Questions
+## 问题
 
 @ul
-- what happens when you add a new Todo item?
-- how does it get to the server?
-- where does the server save it?
-- what happens on start up?
+- 当你添加一个新的待办事项时会发生什么?
+- 它如何到达服务器?
+- 服务器将它保存在哪里?
+- 启动时会发生什么?
 @ulend
 
-Note:
-The students should open DevTools and look at XHR requests that go between the web application and the server. Also the students should find `todomvc/data.json` file with saved items.
+注意:
+学生应该打开DevTools，查看web应用程序和服务器之间的XHR请求. 学生也应该发现保存项目的文件`todomvc/data.json`.
 
 ---
 
 ![Application architecture](./img/vue-vuex-rest.png)
 
-Note:
-This app has been coded and described in this blog post [https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
+注意:
+这个应用程序已经在这篇博客文章中进行了编码和描述 [https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
 
 +++
 
-This app has been coded and described in this blog post [https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
+这个应用程序已经在这篇博客文章中进行了编码和描述 [https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
 
-➡️ Pick the [next section](https://github.com/cypress-io/testing-workshop-cypress#content-)
+➡️ 选择 [下一节](https://github.com/cypress-io/testing-workshop-cypress#content-)

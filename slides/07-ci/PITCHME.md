@@ -1,12 +1,12 @@
-## ☀️ Part 7: Continuous integration
+## ☀️ 第7部分:持续集成
 
-### 📚 You will learn
+### 📚 您将学习
 
-- Cypress Docker images for dependencies
-- Installing and caching Cypress itself
-- How to start server and run Cypress tests
-- CircleCI Orb example
-- GitHub Actions example
+- Cypress Docker 镜像的依赖
+- 安装和缓存 Cypress 本身
+- 如何启动服务器运行Cypress测试
+- CircleCI Orb 示例
+- GitHub Actions 示例
 
 +++
 

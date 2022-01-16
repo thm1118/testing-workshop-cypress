@@ -1,140 +1,135 @@
-## ☀️ Part 2: Adding items tests
+## ☀️ 第2部分: 增加事项测试
 
-### 📚 You will learn
+### 📚 您将学习
 
-- common commands for working with elements
-- organizing test code using Mocha hooks
-
-+++
-
-## What kind of tests?
-
-- discussion: what would you test in the TodoMVC app?
-
-Note:
-Longer tests, adding items then deleting one for example. Adding items via GUI and observing communication with the server. Adding items then reloading the page.
+- 操作元素的常用命令
+- 使用Mocha钩子组织测试代码
 
 +++
 
-- keep `todomvc` app running
-- open `cypress/integration/02-adding-items/spec.js` in your text editor
-- click file `02-adding-items/spec.js` in Cypress
+## 什么样的测试?
+
+- 讨论: 你会在TodoMVC应用程序中测试什么?
+
+注意:
+较长的测试，例如添加项然后删除项. 通过GUI添加事项并观察与服务器的通信. 添加事项，然后重新加载页面.
 
 +++
 
-## ⚠️ Todo items
+- 让 `todomvc` 持续运行
+- 在IDE中打开 `cypress/integration/02-adding-items/spec.js` 
+- 在Cypress中点击 `02-adding-items/spec.js` 
 
-**Note:** the tests we are about to write are NOT resetting the previously added Todo items. Delete the Todo items before each test manually.
++++
 
-We will reset the previously saved Todo items in section "4 Reset State".
+## ⚠️ 代码事项
+
+**注意:** 我们将要编写的测试没有重置之前添加的Todo项. 手动删除每次测试前的Todo项.
+
+我们将在“4 重置状态”章节中重置之前保存的Todo项。.
 
 +++
 
 ```js
-it.only('adds two items', () => {
-  // repeat twice
-  //    get the input field
-  //    type text and "enter"
-  //    assert that the new Todo item
-  //    has been added added to the list
+it.only('添加两个待办事项', () => {
+  // 重复两次
+  //    获取 input 字段
+  //    键入文本"回车"
+  //    断言在列表中 确实增加了 新的 Todo 事项
 })
 ```
 
-**tip** use `cy.get`, `cy.type`, `cy.contains`, `cy.click`, remember `https://on.cypress.io/<command>`
+**提示** 使用 `cy.get`, `cy.type`, `cy.contains`, `cy.click`, 记住 `https://on.cypress.io/<command>`
 
-Note:
-Draw distinction between commands and assertions, show how commands can be chained,
-each continues to work with the subject of the previous command. Assertions do
-not change the subject.
+注意:
+区分命令和断言, 显示命令是如何链接的,
+每一个都继续使用前一个命令的目标subject. 断言不会改变subject.
 
 +++
 
-## Todo: mark first item completed
+## 待办:标记第一项已完成
 
 ```js
-it('can mark an item as completed', () => {
-  // adds a few items
-  // marks the first item as completed
-  // confirms the first item has the expected completed class
-  // confirms the other items are still incomplete
+it('能够标记事项为已完成', () => {
+  // 添加新事项
+  // 标记第一个事项为已完成
+  // 确认第一项具有预期的completed 样式类
+  // 确认其他项目仍然是 incomplete
 })
 ```
 +++
 
-## Refactor code 1/3
+## 重构代码 1/3
 
-- visit the page before each test
+- 在每次测试前访问该页面
 
-Note:
-Avoid duplicate `cy.visit('localhost:3000')` command at the start of each test.
-
-+++
-
-## Refactor code 2/3
-
-- move the url into `cypress.json`
-
-**tip** look at [https://on.cypress.io/configuration](https://on.cypress.io/configuration)
+注意:
+避免在每个测试的开始重复`cy.visit('localhost:3000')` 命令，.
 
 +++
 
-## Refactor code 3/3
+## 重构代码 2/3
 
-- make a helper function to add todo item
+- 将url移动到 `cypress.json`
 
-**tip** it is just JavaScript
-
-Note:
-Move `addItem` function into a separate file and import from the spec file. It is just JavaScript, and Cypress bundles each spec file, so utilities can have `cy...` commands too!
+**提示** 看看 [https://on.cypress.io/configuration](https://on.cypress.io/configuration)
 
 +++
 
-## Todo: delete an item
+## 重构代码 3/3
+
+- 创建一个辅助函数来添加待办事项项
+
+**提示** 这只是 JavaScript
+
+注意:
+将`addItem`函数移到一个单独的文件中，并在spec文件中导入. 它只是JavaScript，并且Cypress捆绑了每个spec文件，所以实用程序可以有`cy…`的命令!
+
++++
+
+## 尝试: 删除一个事项
 
 ```javascript
-it('can delete an item', () => {
-  // adds a few items
-  // deletes the first item
-  // use force: true because we don't want to hover
-  // confirm the deleted item is gone from the dom
-  // confirm the other item still exists
+it('能够删除一个事项', () => {
+  // 添加一些事项
+  // 删除第一个事项
+  // 使用 force: true 因为我们不想悬停确认删除的项已经从dom中删除，确认另一个项仍然存在
 })
 ```
 +++
 
-## Todo
+## 尝试
 
 ```javascript
-it('adds item with random text', () => {
-  // use a helper function with Math.random()
-  // or Cypress._.random() to generate unique text label
-  // add such item
-  // and make sure it is visible and does not have class "completed"
+it('添加带有随机文本的事项', () => {
+  // 通过 Math.random()或Cypress._.random() 生成事项的唯一的文本标签，包装成辅助函数
+  // 添加这些事项
+  // 并确保这些事项是可见的，没有样式类 "completed"
 })
 ```
 
 +++
 
-## 💡 Pro tips
+## 💡 专业提示
 
-- resize the viewport in `cypress.json`
-- set up IntelliSense in `cypress.json` using [https://on.cypress.io/intelligent-code-completion](https://on.cypress.io/intelligent-code-completion)
-
-+++
-## Adding blank item
-
-The application does not allow adding items with blank titles. What happens when the user does it? Hint: open DevTools console.
-
-### Todo
-
-Fill the test `does not allow adding blank todos`.
+- 在`cypress.json`中调整视窗的大小 
+- 在`cypress.json`中设置 智能感知[https://on.cypress.io/intelligent-code-completion](https://on.cypress.io/intelligent-code-completion)
 
 +++
-## Bonus
+## 添加空白事项
 
-Unit tests vs end-to-end tests
+应用程序不允许添加带有空白标题的事项. 当用户这样做时会发生什么? 提示:打开DevTools控制台.
 
-### Unit tests
+### 尝试
+
+填写测试 `不允许添加空白事项`.
+
++++
+## 意外收获
+
+单元测试 vs 端到端测试
+
+### 单元测试
 
 ```javascript
 import add from './add'
@@ -144,22 +139,23 @@ test('add', () => {
 ```
 
 - arrange - action - assertion
+- 配置前提 - 执行 - 断言
 
 +++
 
-### End-to-end tests
+### 端到端测试
 
 ```javascript
 const addItem = text => {
   cy.get('.new-todo').type(`${text}{enter}`)
 }
-it('can mark items as completed', () => {
+it('能否将事项标记为已完成', () => {
   const ITEM_SELECTOR = 'li.todo'
   addItem('simple')
   addItem('difficult')
   cy.contains(ITEM_SELECTOR, 'simple').should('exist')
     .find('input[type="checkbox"]').check()
-  // have to force click because the button does not appear unless we hover
+  // 必须强制点击，因为按钮只会在鼠标悬停时显示；
   cy.contains(ITEM_SELECTOR, 'simple').find('.destroy').click({ force: true })
   cy.contains(ITEM_SELECTOR, 'simple').should('not.exist')
   cy.get(ITEM_SELECTOR).should('have.length', 1)
@@ -167,27 +163,27 @@ it('can mark items as completed', () => {
 })
 ```
 
-- **tip** check out `cy.pause` command
+- **提示** 查看 `cy.pause` 命令
 
-Note:
-Revisit the discussion about what kind of tests one should write. E2E tests can cover a lot of features in a single test, and that is a recommended practice. If a test fails, it is easy to debug it, and see how the application looks during each step.
-
-+++
-
-### Unit vs E2E
-
-- if you are describing how code works: unit test
-- if you are describing how code is used by the user: end-to-end test
+注意:
+再次讨论应该编写什么样的测试. 端到端测试可以在一个测试中涵盖很多特性, 这是推荐的做法. 如果测试失败，很容易调试它，并查看应用程序在每个步骤中的样子.
 
 +++
 
-### Bonus
+### 单测 vs E2E
 
-- Core concepts [https://on.cypress.io/writing-and-organizing-tests](https://on.cypress.io/writing-and-organizing-tests)
+- 如果你正在描述代码如何工作:单元测试
+- 如果您正在描述用户如何使用代码:端到端测试
 
 +++
 
-Organize tests using folder structure and spec files
+### 意外收获
+
+- 核心概念 [https://on.cypress.io/writing-and-organizing-tests](https://on.cypress.io/writing-and-organizing-tests)
+
++++
+
+使用文件夹结构和规范文件组织测试
 
 ```text
 cypress/integration/
@@ -201,7 +197,7 @@ cypress/integration/
 
 +++
 
-Organize tests inside a spec using Mocha functions
+一个spec文件中，使用Mocha函数在组织每个测试
 
 ```js
 describe('Feature A', () => {
@@ -221,9 +217,9 @@ describe('Feature A', () => {
 ```
 
 +++
-## 🏁 Write your tests like a user
+## 🏁 像用户一样编写测试
 
-- go through UI
-- validate the application after actions
+- 通过用户界面
+- 在操作之后验证应用程序
 
-➡️ Pick the [next section](https://github.com/cypress-io/testing-workshop-cypress#content-)
+➡️ 选择 [下一节](https://github.com/cypress-io/testing-workshop-cypress#content-)

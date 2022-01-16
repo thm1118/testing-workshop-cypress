@@ -1,20 +1,20 @@
-## ☀️ Part 11: Retry-ability
+## ☀️ 第11部分: 重试能力
 
-### 📚 You will learn
+### 📚 您将学习
 
-- deep dive into assertions
-- built-in command waits
-- retry-ability 🔑
-- aliases
-
-+++
-
-- keep `todomvc` app running
-- open `cypress/integration/11-retry-ability/spec.js`
+- 深入研究断言
+- 内置命令 waits
+- 重试能力 🔑
+- 别名
 
 +++
 
-## Todo: finish the test "shows UL"
+- 保持 `todomvc` app 运行
+- 打开 `cypress/integration/11-retry-ability/spec.js`
+
++++
+
+## 尝试:完成测试  "shows UL"
 
 ```js
 it('shows list of items', function () {
@@ -29,7 +29,7 @@ it('shows list of items', function () {
 
 +++
 
-Most assertions I write are BDD
+我写的大多数断言都是BDD
 
 ```js
 cy.contains('ul', 'todo A').should('be.visible')
@@ -40,7 +40,7 @@ expect($el).to.have.prop('disabled', false)
 
 +++
 
-1, 2, or 3 arguments
+1, 2, or 3 个参数
 
 ```js
 .should('be.visible')
@@ -50,19 +50,19 @@ expect($el).to.have.prop('disabled', false)
 
 +++
 
-## There is IntelliSense
+## BDD有智能感知
 
 ![BDD IntelliSense](./img/assertion-intellisense.png)
 
 +++
 
-⚠️ straight Chai IntelliSense is not so good
+⚠️  Chai 智能感知不是很好
 
 ![Chai assertion IntelliSense](./img/chai-intellisense.png)
 
 +++
 
-If you must, there are TDD assertions like
+如果需要，可以使用TDD断言
 
 ```js
 assert.equal(3, 3, 'values are equal')
@@ -73,9 +73,9 @@ assert.isTrue(true, 'this value is true')
 
 +++
 
-## Todo: BDD vs TDD
+## 尝试: BDD vs TDD
 
-Finish test "shows UL - TDD"
+完成测试  "shows UL - TDD"
 
 ```js
 it('shows UL - TDD', function () {
@@ -90,11 +90,11 @@ it('shows UL - TDD', function () {
 
 +++
 
-## @fa[question](do you see the difference?)
+## @fa[问题](do you see the difference?)
 
-Which style do you prefer?
+您喜欢哪种款式?
 
-⚠️ [Chai-jQuery](https://on.cypress.io/assertions#Chai-jQuery) and [Sinon-Chai](https://on.cypress.io/assertions#Sinon-Chai) are only available in BDD mode.
+⚠️ [Chai-jQuery](https://on.cypress.io/assertions#Chai-jQuery) 以及 [Sinon-Chai](https://on.cypress.io/assertions#Sinon-Chai) 仅仅在 BDD 模式内.
 
 +++
 
@@ -108,9 +108,9 @@ Which style do you prefer?
 
 +++
 
-## What if you need more complex assertions?
+## 如果您需要更复杂的断言怎么办?
 
-Write you own [should(cb)](http://on.cypress.io/should#Function) assertion
+编写你自己的 [should(cb)](http://on.cypress.io/should#Function) 断言
 
 ```js
 cy.get('.docs-header').find('div')
@@ -123,7 +123,7 @@ cy.get('.docs-header').find('div')
 
 +++
 
-## Todo: write complex assertion
+## 尝试: 编写复杂的断言
 
 ```js
 it('every item starts with todo', function () {
@@ -137,25 +137,25 @@ it('every item starts with todo', function () {
 
 +++
 
-## `should(cb)` common use cases
+## `should(cb)` 常见用例
 
-- dynamic data, like scoped class names
-- text between two cells is unknown but should be the same
-- displayed value should be the same as API has returned
+- 动态数据，比如有作用域的类名
+- 两个单元格之间的文本是未知的，但应该相同
+- 显示的值应该与API返回的值相同
 
 [https://example.cypress.io/commands/assertions](https://example.cypress.io/commands/assertions)
 
 +++
 
-## 🔑 Retry-ability
+## 🔑 重试能力
 
-> Key concept in Cypress, yet should go mostly unnoticed.
+> Cypress的关键概念，但大多数不被注意.
 
-Note:
-Add link to retry-ability page when finished https://github.com/cypress-io/cypress-documentation/pull/1314
+注意:
+完成后将链接添加到重试能力页面  https://github.com/cypress-io/cypress-documentation/pull/1314
 +++
 
-### Commands and assertions
+### 命令和断言
 
 ```javascript
 it('creates 2 items', function () {
@@ -172,21 +172,21 @@ it('creates 2 items', function () {
 
 +++
 
-### Look at the last command + assertion
+### 看看最后一个命令+断言
 
 ```javascript
 cy.get('.todo-list li')     // command
   .should('have.length', 2) // assertion
 ```
 
-Command `cy.get()` will be retried _until_ the assertion `should('have.length', 2)` passes.
+命令 `cy.get()` 将被重试 ，直到断言 `should('have.length', 2)` 通过.
 
-Note:
-If not shown, this is a good moment to slow down the app and show how the assertion still works, especially when slowing down progressively - 1 item, slow down by 1 second, 2 items - slow down by 2 seconds.
+注意:
+如果没有显示, 现在是放慢应用程序速度并展示断言如何工作的好时机, 特别是当你逐渐慢下来的时候 - 1 item, 慢1秒, 2 items - 减速2秒.
 
 +++
 
-Command `cy.contains` will be retried _until 3 assertions_ that follow it all pass.
+命令`cy.contains` 将被重试，直到它后面的3个断言全部通过。
 
 ```js
 cy.contains('ul', 'todo A')                   // command
@@ -197,7 +197,7 @@ cy.contains('ul', 'todo A')                   // command
 
 +++
 
-Command `cy.get` will be retried _until 5 assertions_ that follow it all pass.
+命令`cy.get`将被重试，直到5个断言都通过。
 
 ```js
 cy.get('.todo label')                 // command
@@ -212,11 +212,11 @@ cy.get('.todo label')                 // command
 
 +++
 
-## Retry-ability
+## 重试能力
 
-Only some commands are retried: `cy.get`, `cy.find`, `its`. They don't change the application's state.
+只有一些命令被重试: `cy.get`, `cy.find`, `its`. 它们不会改变应用程序的状态。
 
-NOT retried: `cy.click`, `cy.task`, etc.
+不会重试的命令有: `cy.click`, `cy.task`, 等等.
 
 ![Assertions section](./img/retry.png)
 
@@ -224,48 +224,48 @@ NOT retried: `cy.click`, `cy.task`, etc.
 
 ## `then(cb)` vs `should(cb)`
 
-- `should(cb)` retries
-- `then(cb)` does not retry
+- `should(cb)` 重试
+- `then(cb)` 不会重试
 
-### Todo: demonstrate this
-
-+++
-
-## return value from `should(cb)`
-
-Question: can you return value from `should(cb)`?
-
-Note:
-`Should(cb)` does not return a value, it just passes along the value yielded by the command. If you need a value, first call `should(cb)` and then `then(cb)` to return it.
+### 尝试: 证明这一点
 
 +++
 
-## Automatic Waiting
+##  `should(cb)`的返回值
+
+问题:  `should(cb)` 能返回值吗?
+
+注意:
+`Should(cb)` 没有直接返回值， 它只是传递由命令生成的值. 如果你需要一个值, 首先调用 `should(cb)` 其次通过 `then(cb)` 来获得返回值.
+
++++
+
+## 自动等待
 
 ![Waiting](./img/waiting.png)
 
-Built-in assertion in most commands, even if they do not retry assertions that follow. `cy.click` cannot click a button if there is no button, or if it's disabled!
+大多数命令内置了断言, 即使它们不重试跟随在其后的断言. `cy.click` 如果没有按钮，则无法单击按钮, 或者它是否被禁用!
 
-Note:
-Just like a human user, Cypress tries to do sensible thing. Very rarely though you need to retry a command that is NOT retried by Cypress, in that case you can perform it yourself, see [When Can the Test Click?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)
+注意:
+就像人类用户一样, Cypress试图做明智的事情. 您需要重试,而Cypress没有重试的命令的情况非常罕见, 即使有这种情况，你也可以自己执行, 查看 [测试什么时候可以点击?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)
 
 +++
 
-## Timeouts
+## 超时
 
-By default, command retries for up to 4 seconds. You can change config setting `defaultCommandTimeout` globally.
+默认情况下，命令重试时间最长为4秒. 您可以通过设置`defaultCommandTimeout`更改全局配置.
 
 ```sh
 cypress run --config defaultCommandTimeout=10000
 ```
 
-⚠️ changing global command timeout is not recommended.
+⚠️ 不建议修改全局命令超时时间.
 
 +++
 
-## Timeouts
+## 超时
 
-Change timeout for a particular command
+更改特定命令的超时时间
 
 ```js
 // we've modified the timeout which affects
@@ -275,19 +275,19 @@ cy.get('.mobile-nav', { timeout: 10000 })
   .and('contain', 'Home')
 ```
 
-See [Timeouts](https://on.cypress.io/introduction-to-cypress#Timeouts)
+查看 [超时](https://on.cypress.io/introduction-to-cypress#Timeouts)
 
 +++
 
-> ⚠️ Only the last command is retried ⚠️
+> ⚠️ 只重试最后一个命令 ⚠️
 
 +++
 
-### Todo: write test that checks the label
+### 尝试: 编写检查标签的测试
 
 ![one label](./img/one-label.png)
 
-⌨️ test "has the right label"
+⌨️ 测试 "has the right label"
 
 +++
 
@@ -302,11 +302,11 @@ it('has the right label', () => {
 
 +++
 
-### Todo: write test that checks two labels
+### 尝试: 编写检查两个标签的测试
 
 ![two labels](./img/two-labels.png)
 
-⌨️ test "has two labels"
+⌨️ 测试 "has two labels"
 
 +++
 
@@ -326,7 +326,7 @@ it('has two labels', () => {
 
 +++
 
-## Add delay to the app
+## 在应用程序中添加延迟
 
 ```js
 // todomvc/app.js
@@ -340,31 +340,31 @@ addTodo ({ commit, state }) {
 },
 ```
 
-> Is the test passing now?
+> 测试现在还能通过吗?
 
 +++
 
-## Todo: debug the failing test
+## 尝试: 调试失败的测试
 
-- inspect the failing command "FIND"
-- inspect previous command "GET"
-- what do you think is happening?
+- 检查失败的命令  "FIND"
+- 检查之前的命令 "GET"
+- 你认为发生了什么?
 
-Note:
-`FIND` command is never going to succeed, because it is already locked to search in the _first_ `<li>` element only. So when the second correct `<li>` element appears, `FIND` still only searches in the first one - because Cypress does not go back to retry `cy.get`.
-
-+++
-
-## Todo: remove or shorten the artificial delay to make the test flaky
-
-> Use the binary search algorithm to find delay that turns the test into flaky test - sometimes the test passes, sometimes it fails.
-
-Note:
-For me it was 46ms. Flaky test like this works fine locally, yet sometimes fails in production where network delays are longer.
+注意:
+`FIND` 命令永远不会成功, 因为它已经锁定了只搜索第一个`<li>`元素. 所以当第二个正确的 `<li>` 元素出现时, `FIND` 仍然只搜索第一个 - 因为Cypress不会回去再重试 `cy.get`.
 
 +++
 
-> ⚠️ Only the last command is retried ⚠️
+## 尝试: 消除或缩短人为延迟使测试不稳定
+
+> 使用二分搜索算法找到延迟，使测试变成片状测试 - 测试有时通过，有时失败。
+
+注意:
+对我来说是46毫秒. 像这样不可靠的测试在本地运行良好,然而，在网络延迟较长的情况下，生产有时会失败.
+
++++
+
+> ⚠️ 只重试最后一个命令 ⚠️
 
 ```js
 cy.get('.new-todo').type('todo B{enter}')
@@ -374,11 +374,11 @@ cy.get('.todo-list li') // queries immediately, finds 1 <li>
   .should('contain', 'todo B')
 ```
 
-How do we fix the flaky test?
+我们如何修正这个不可靠的测试?
 
 +++
 
-## Solution 1: merge queries
+## 解决方案1:合并查询
 
 ```js
 // dangerous ⚠️
@@ -391,18 +391,18 @@ cy.get('.todo-list li label')
   .should(...)
 ```
 
-⌨️ try this in test "solution 1: merges queries"
+⌨️ 在测试中试试这个 "solution 1: merges queries"
 
-Note:
-The test should pass now, even with longer delay, because `cy.get` is retried.
+注意:
+测试现在应该通过了，即使有更长的延迟, 因为 `cy.get` 被重试了.
 
 +++
 
-## merge queries for `cy.its`
+## 合并查询 `cy.its`
 
 ```javascript
-// dangerous ⚠️
-// only the last "its" will be retried
+// 危险 ⚠️
+// 只有最后一个 "its" 会被重试
 cy.window()
   .its('app')             // runs once
   .its('model')           // runs once
@@ -415,11 +415,11 @@ cy.window()
   .should('have.length', 2)
 ```
 
-From [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/)
+来自 [设置标志开始测试](https://glebbahmutov.com/blog/set-flag-to-start-tests/)
 
 +++
 
-## Solution 2: alternate commands and assertions
+## 解决方案2:可选命令和断言
 
 ```js
 cy.get('.new-todo').type('todo A{enter}')
@@ -435,12 +435,12 @@ cy.get('.todo-list li')         // command
   .should('contain', 'todo B')  // assertion
 ```
 
-⌨️ try this in test "solution 2: alternate commands and assertions"
+⌨️ 尝试测试  "solution 2: alternate commands and assertions"
 
 +++
-## Cypress Retries: Triple Header
+## Cypress 重试:三重报头
 
-### 1. DOM queries
+### 1. DOM 查询
 
 ```js
 cy.get('li')
@@ -448,9 +448,9 @@ cy.get('li')
 ```
 
 +++
-## Cypress Retries: Triple Header
+## Cypress 重试 :三重报头
 
-### 2. Network
+### 2. 网络
 
 ```js
 // spy / stub network calls
@@ -461,9 +461,9 @@ cy.wait('@new-item')
 ```
 
 +++
-## Cypress Retries: Triple Header
+## Cypress 重试 :三重报头
 
-### 3. Application
+### 3. 应用程序
 
 ```js
 // access and spy / stub application code
@@ -473,11 +473,11 @@ cy.get('@some-method')
 ```
 
 ---
-## Aliases
+## 别名
 
-Values and DOM elements can be saved under an alias using [.as](https://on.cypress.io/as) command.
+使用 [.as](https://on.cypress.io/as) command别名保存 值和DOM元素.
 
-Read the guide at [https://on.cypress.io/variables-and-aliases](https://on.cypress.io/variables-and-aliases)
+请参阅本指南 [https://on.cypress.io/variables-and-aliases](https://on.cypress.io/variables-and-aliases)
 
 +++
 
@@ -496,15 +496,15 @@ it('does not exist in the second test', () => {
 })
 ```
 
-**Note** aliases are reset before each test
+**注意** 在每次测试之前别名会被重置
 
 +++
 
-![Failing second test due to an alias defined in before hook](./img/alias-does-not-exist.png)
+![第二次测试失败，因为钩子前定义了别名](./img/alias-does-not-exist.png)
 
 +++
 
-**Solution:** create aliases using `beforeEach` hook
+**解决办法:** 在 `beforeEach` 钩子中创建别名
 
 ```js
 beforeEach(() => {
@@ -522,30 +522,30 @@ it('works in the second test', () => {
 ```
 
 ---
-## 📝 Take away
+## 📝 拿走
 
-Most commands have built-in sensible waits:
+大多数命令都有内置的合理等待:
 
-> Element should exist and be visible before clicking
+> 元素应该存在并在单击之前可见
 
 +++
 
-## 📝 Take away
+## 📝 拿走
 
-Many commands also retry themselves until the assertions that follow pass
+许多命令也会重试自己，直到后面的断言通过为止
 
 ```js
 cy.get('li')
   .should('have.length', 2)
 ```
 
-DOM 🎉 Network 🎉 Application methods 🎉
+DOM 🎉 网络 🎉 应用程序方法 🎉
 
 +++
 
-## 📝 Take away
+## 📝 拿走
 
-> ⚠️ Only the last command is retried ⚠️
+> ⚠️ 只会重试最后一个命令 ⚠️
 
-1. Merge queries into one command
-2. Alternate commands and assertions
+1. 将查询合并到一个命令中
+2. 可选命令和断言

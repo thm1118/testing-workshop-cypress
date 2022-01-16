@@ -1,23 +1,23 @@
-## ☀️ Part 5: Control network calls
+## ☀️ 第5部分: 控制网络调用
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to spy / stub network calls
-- how to wait for the network calls from tests
-- how to use network calls in assertions
-
-+++
-
-- keep `todomvc` app running
-- open `cypress/integration/05-xhr/spec.js`
-- `cy.route` is deprecated, use `cy.intercept`
+- 如何 监视/模拟 网络调用
+- 如何等待测试的网络调用
+- 如何在断言中使用网络调用
 
 +++
 
-## Situation
+- 保持 `todomvc` app 运行
+- 打开 `cypress/integration/05-xhr/spec.js`
+- `cy.route` 已废弃, 使用 `cy.intercept`
 
-- there is **no resetting** the state before each test
-- the test passes but _something is wrong_
++++
+
+## 当前情况
+
+- 在每个测试之前没有重置数据
+- 测试通过了，但是有的测试是应该失败的
 
 ```javascript
 it('starts with zero items', () => {
@@ -26,27 +26,27 @@ it('starts with zero items', () => {
 })
 ```
 
-![Should have failed](./img/test-passes-but-this-is-wrong.png)
+![应该失败](./img/test-passes-but-this-is-wrong.png)
 
 +++
 
-## Problem
+## 问题点
 
 @ul
 
-- page loads
-- web application makes XHR call `GET /todos`
-  - meanwhile it shows an empty list of todos
-- Cypress assertion passes!
-- `GET /todos` returns with 2 items
-  - they are added to the DOM
-  - but the test has already finished
+- 页面加载
+- web应用程序进行 XHR 调用 `GET /todos`
+  - 同时，它显示一个空的待办事项列表
+- Cypress 断言通过!
+- `GET /todos` 返回2个事项
+  - 它们已添加到DOM中
+  - 但是测试已经结束了
 
 @ulend
 
 +++
 
-## Waiting
+## 如果等待 1 秒
 
 ```javascript
 it('starts with zero items', () => {
@@ -56,33 +56,33 @@ it('starts with zero items', () => {
 })
 ```
 
-![Waiting works](./img/waiting.png)
+![等待结果展示](./img/waiting.png)
 
 +++
 
-**better** to wait on a specific XHR request. Network is just observable public effect, just like DOM.
+**更好的** 等待特定的XHR请求. 网络只是一个可观测的公开效果，就像DOM一样.
 
 +++
 
-### Todo
+### 尝试
 
-In `05-xhr/spec.js` test "starts with zero items"
+在 `05-xhr/spec.js` 测试里  "starts with zero items"
 
 @ul
 
-- spy on specific route with `cy.intercept`
-  - should we start mock server _before_ or _after_ `cy.visit`?
-- save as an alias
-- wait for this XHR alias
-  - then check the DOM
+- 使用`cy.intercept`监视特定 路由
+  - 我们应该在`cy.visit`之前还是之后启动模拟服务?
+- 保存为别名
+- 等待这个XHR别名
+  - 再去检查DOM
 
 @ulend
 
-**tips:** [`cy.intercept`]('https://on.cypress.io/intercept), [Network requests guide](https://on.cypress.io/network-requests)
+**提示:** [`cy.intercept`]('https://on.cypress.io/intercept), [网络请求指南](https://on.cypress.io/network-requests)
 
 +++
 
-💡 No need to `cy.wait(...).then(...)`. All Cypress commands will be chained automatically.
+💡 没必要使用 `cy.wait(...).then(...)`. 所有的Cypress命令将被自动链接.
 
 ```js
 cy.intercept('GET', '/todos').as('todos')
@@ -92,26 +92,26 @@ cy.wait('@todos')
 cy.get('li.todo').should('have.length', 0)
 ```
 
-Read [Introduction to Cypress](https://on.cypress.io/introduction-to-cypress) "Commands Run Serially"
+阅读 [介绍Cypress](https://on.cypress.io/introduction-to-cypress) "连续运行命令"
 
 +++
 
-## Todo
+## 尝试
 
-add to test "starts with zero items":
+添加测试 "starts with zero items":
 
-- wait for the XHR alias like before
-- its response body should be an empty array
+- 像之前一样等待XHR别名
+- 它的响应body应该是一个空数组
 
-![Checking response body](./img/response-body.png)
+![检查响应 body](./img/response-body.png)
 
 +++
 
-## Stub network call
+## 模拟响应 网络调用
 
-Update test "starts with zero items (stubbed response)"
+更新测试  "starts with zero items (stubbed response)"
 
-- instead of just spying on XHR call, let's return some mock data
+- 我们不仅 监视XHR调用，还 返回一些模拟数据
 
 ```javascript
 // returns an empty list
@@ -132,7 +132,7 @@ it('starts with zero items (fixture)', () => {
   cy.get('li.todo').should('have.length', 0)
 })
 ```
-**tip:** use [`cy.fixture`](https://on.cypress.io/fixture) command
+**提示:** 使用 [`cy.fixture`](https://on.cypress.io/fixture) 命令
 
 +++
 
@@ -148,72 +148,72 @@ it('loads several items from a fixture', () => {
 
 +++
 
-### Spying on adding an item XHR
+### 监视添加一个事项的XHR
 
-When you add an item through the DOM, the app makes `POST` XHR call.
+当你通过DOM添加一个事项时，应用程序会调用`POST` XHR.
 
 ![Post new item](./img/post-item.png)
 
-Note:
-It is important to be able to use DevTools network tab to inspect the XHR and its request and response.
+注意:
+能够使用DevTools网络选项卡来检查XHR及其请求和响应是很重要的.
 
 +++
 
-**Todo 1/2**
+**尝试 1/2**
 
-- write a test "posts new item to the server" that confirms that new item is posted to the server
+- 编写一个测试 "posts new item to the server" 这将确认新事项已被发送到服务器
 
 ![Post new item](/slides/05-xhr/img/post-item.png)
 
-Note:
-see instructions in the `05-xhr/spec.js` for the test
+注意:
+查看 `05-xhr/spec.js` 内的介绍
 
 +++
 
-**Todo 2/2**
+**尝试 2/2**
 
-- write a test "posts new item to the server response" that confirms that RESPONSE when a new item is posted to the server
+- 编写一个测试  "posts new item to the server response"  确认当一个新事项被发布到服务器时响应
 
 ![Post new item response](/slides/05-xhr/img/post-item-response.png)
 
-Note:
-see instructions in the `05-xhr/spec.js` for the test
+注意:
+查看`05-xhr/spec.js` 内该测试介绍
 
 +++
 
-## Bonus
+## 意外收获
 
-Network requests guide at [https://on.cypress.io/network-requests](https://on.cypress.io/network-requests). Question: which requests do you spy on, which do you stub?
+网络请求指南载于[https://on.cypress.io/network-requests](https://on.cypress.io/network-requests). 问:你会监视哪些请求，你会模拟响应哪些请求?
 
 +++
 
-## Testing Loading state
+## 测试加载状态
 
-In the application we are showing (very quickly) "Loading" state
+在这个应用程序中，我们很快地展示了“加载”状态
 
 ```html
-<div class="loading" v-show="loading">Loading data ...</div>
+<div class="loading" v-show="loading">加载数据 ...</div>
 ```
 
 +++
 
-## Todo
+## 尝试
 
-- delay the loading XHR request
-- assert the UI is showing "Loading" element
-- assert the "Loading" element goes away after XHR completes
+- 延迟XHR请求的加载
+- 断言UI正在显示“加载数据 ”元素
+- 断言“加载数据 ”元素在XHR完成后消失
 
-⌨️ test "shows loading element"
-
-+++
-## Let's test edge data cases
-
-User cannot enter blank titles. What if our database has old data records with blank titles?
-
-**Todo** write the test `handles todos with blank title`
+⌨️ 测试 "shows loading element"
 
 +++
-## 🏁 Spy and stub the network from your tests
+## 让我们测试一下边界数据的情况
 
-- confirm the REST calls
-- stub random data
+用户不能输入空白标题.如果我们的数据库有空白标题的旧数据记录怎么办?
+
+**尝试** 编写测试 `handles todos with blank title`
+
++++
+## 🏁 在测试中监视网络调用，并模拟网络响应
+
+- 确认REST调用
+- 模拟响应随机数据

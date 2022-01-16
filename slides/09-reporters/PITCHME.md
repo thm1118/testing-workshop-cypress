@@ -1,21 +1,21 @@
-## ☀️ Part 9: Reporters
+## ☀️ 第9部分:报告
 
-### 📚 You will learn
+### 📚 您将学习
 
-- built-in reporters
-- generating multiple reports
-- combining separate reports
+- 内置报告
+- 生成多个报告
+- 结合不同的报告
 
 +++
 
-- Mocha's [built-in reporters](https://mochajs.org/#reporters) come with Cypress
+- Cypress 内置的Mocha 的 [内置报告](https://mochajs.org/#reporters)  
 - [https://on.cypress.io/reporters](https://on.cypress.io/reporters)
 
 +++
 
-## Todo: try a different reporter
+## 尝试: 试着换一个报告
 
-There are `json`, `list`, `markdown`, etc, see [https://mochajs.org/#reporters](https://mochajs.org/#reporters)
+有 `json`, `list`, `markdown`, 等报告类型, 查看 [https://mochajs.org/#reporters](https://mochajs.org/#reporters)
 
 ```json
 {
@@ -23,16 +23,16 @@ There are `json`, `list`, `markdown`, etc, see [https://mochajs.org/#reporters](
 }
 ```
 
-and run `npm test`.
+再运行 `npm test`.
 
-Note:
-Each reporter changes the `STDOUT` output.
+注意:
+每个报告 都会更改`STDOUT`的输出。
 
 +++
 
-## Todo: use built-in `junit` reporter
+## 尝试: 使用内置的`junit`报告
 
-Bonus: direct output to a different file
+好处:直接输出到不同的文件
 
 ```json
 {
@@ -45,9 +45,9 @@ Bonus: direct output to a different file
 
 +++
 
-## Question
+## 问题
 
-Are all test results in the saved output file?
+是否所有测试结果都在保存的输出文件中?
 
 ![Run numbers](./img/test-run.png)
 
@@ -55,7 +55,7 @@ Are all test results in the saved output file?
 
 +++
 
-## Todo: report per spec
+## 尝试: 每个测试给出一个报告
 
 ```json
 {
@@ -67,15 +67,15 @@ Are all test results in the saved output file?
 }
 ```
 
-Note:
-Option `reporterOptions.toConsole = true` mirrors JUnit reports to `STDOUT`.
-Filename with `[hash]` will save individual report per spec. Remember to clean the output folder before running the tests like `rm cypress/results/* || true && npm test`.
+注意:
+选项 `reporterOptions.toConsole = true` 镜像 JUnit报告输出到 `STDOUT`.
+带有`[hash]` 的文件名将根据每个spec保存单个报告. 记住在运行测试之前清理输出文件夹 `rm cypress/results/* || true && npm test`.
 
 +++
 
 ## mocha-multi-reporters
 
-I want to output `spec` to `STDOUT` _and_ save `junit` reports. Use [mocha-multi-reporters](https://github.com/stanleyhlng/mocha-multi-reporters) and install all peer dependencies.
+我想输出 `spec` 到 `STDOUT` 并且同时保存  `junit` 报告. 使用 [mocha-multi-reporters](https://github.com/stanleyhlng/mocha-multi-reporters) 并安装所有依赖.
 
 ```sh
 npm i -D mocha mocha-multi-reporters mocha-junit-reporter
@@ -97,7 +97,7 @@ npm i -D mocha mocha-multi-reporters mocha-junit-reporter
 
 ## Mochawesome
 
-Let's generate [Mochawesome](https://github.com/adamgruber/mochawesome) individual JSON reports, merge them and then generate combined HTML report.
+我们用 [Mochawesome](https://github.com/adamgruber/mochawesome) 独立的 JSON 报告, 合并它们，然后生成合并的HTML报告.
 
 ```sh
 npm i -D mocha mochawesome \
@@ -116,22 +116,22 @@ npm i -D mocha mochawesome \
 }
 ```
 
-Note:
-This should produce files in `cypress/results` like `mochawesome.json`, `mochawesome_001.json`, `mochawesome_002.json`. Then we need to merge them into a single JSON.
+注意:
+这将在`cypress/results`中生成文件，类似 `mochawesome.json`, `mochawesome_001.json`, `mochawesome_002.json`. 然后我们需要将它们合并到一个JSON中.
 
 +++
 
-## Merge and generate HTML report
+## 合并并生成HTML报告
 
 ```sh
 $(npm bin)/mochawesome-merge --reportDir cypress/results > mochawesome.json
 $(npm bin)/marge mochawesome.json
 ```
 
-Uses [https://github.com/adamgruber/mochawesome-report-generator](https://github.com/adamgruber/mochawesome-report-generator) - aka `marge`
+使用 [https://github.com/adamgruber/mochawesome-report-generator](https://github.com/adamgruber/mochawesome-report-generator) - aka `marge`
 
-Note:
-`$(npm bin)/marge` is the bin alias of `mochawesome-report-generator` package. This should save beautiful report `mochawesome-report/mochawesome.html`.
+注意:
+`$(npm bin)/marge` 是 `mochawesome-report-generator` 包的二进制别名. 能保存漂亮的报告 `mochawesome-report/mochawesome.html`.
 
 +++
 
