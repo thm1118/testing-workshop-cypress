@@ -1,52 +1,52 @@
-## ☀️ Part 13: App Actions
+## ☀️ 第13部分:应用程序行为
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to organize test code using Page Objects
-- how to call into application directly from tests
-- benefits of App Actions
-
-+++
-
-## Based on
-
-- 📝 blog [Stop using Page Objects and Start using App Actions](https://www.cypress.io/blog/2019/01/03/stop-using-page-objects-and-start-using-app-actions/)
-- 💻 code [bahmutov/test-todomvc-using-app-actions](https://github.com/bahmutov/test-todomvc-using-app-actions)
+- 如何使用页面对象组织测试代码
+- 如何从测试直接调用应用程序代码
+- 应用程序行为的价值
 
 +++
 
-## How do we organize our tests?
+## 基于
+
+- 📝 博客 [停止使用页面对象，使用应用程序操作](https://www.cypress.io/blog/2019/01/03/stop-using-page-objects-and-start-using-app-actions/)
+- 💻 代码 [bahmutov/test-todomvc-using-app-actions](https://github.com/bahmutov/test-todomvc-using-app-actions)
+
++++
+
+## 我们如何组织测试结构?
 
 @ul
-- 👍 Cypress allows you to write a lot of E2E tests
-- 👎 Cypress allows you to write a LOT of E2E tests
+- 👍 Cypress 允许您编写大量的端到端测试
+- 👎 Cypress 允许您编写 _大量_ 的端到端测试
 @ulend
 
 +++
 
-## Let us write a Page Object
+## 让我们写一个页面对象
 
-- STOP 🛑 `todomvc` app, instead
+- 停止 🛑 `todomvc` app, 替换为
 
 ```sh
 npm run start:react
 ```
 
-Full React TodoMVC implementation with routing.
+完整的 React TodoMVC 实现了路由.
 
-Note:
-We will be running a different implementation of TodoMVC at the same port. So stop previous app server and start the new app from the root folder using the above command.
-
-+++
-
-- find Page Object in `cypress/integration/13-app-actions/todo-page-object.js`
-- open `cypress/integration/13-app-actions/using-po-spec.js`
+注意:
+我们将在同一个端口上运行TodoMVC的不同实现. 因此，停止之前的应用服务，并使用上面的命令从根目录启动新的应用程序服务.
 
 +++
 
-## Todo: write create todos test
+- 在 `cypress/integration/13-app-actions/todo-page-object.js` 找到页面对象
+- 打开 `cypress/integration/13-app-actions/using-po-spec.js`
 
-use the page object methods
++++
+
+## 尝试: 编写创建待办事项的测试
+
+使用页面对象方法
 
 ```js
 beforeEach(() => {
@@ -75,12 +75,12 @@ it('creates 3 todos', () => {
 })
 ```
 
-Note:
-The object-oriented wrapper and imperative style in the code.
+注意:
+代码中的面向对象包装器和命令式风格.
 
 +++
 
-## Todo: write toggle test
+## 尝试: 编写切换待办状态的 测试
 
 ```js
 // cypress/integration/13-app-actions/using-po-spec.js
@@ -100,8 +100,8 @@ context('toggles items', () => {
 
 ![Toggle test](./img/toggle.png)
 
-Note:
-Our goal is to use todo page instance to create todos, then toggle one of them (again using the page object), then confirm class names like `todoPage.todos(0).should('not.have.class', 'completed')`.
+注意:
+我们的目标是使用待办事项页面实例来创建待办事项, 然后切换其中一个的待办状态 (再次使用页面对象), 最后断言样式类的值，比如 `todoPage.todos(0).should('not.have.class', 'completed')`.
 
 +++
 
@@ -119,16 +119,16 @@ it('completes second item', () => {
 
 +++
 
-You can implement Page Objects using classes, custom commands or simple functions.
+您可以使用类、自定义命令或简单函数来实现页面对象.
 
 +++
 
-## My problems with the Page Object
+## 我对使用页面对象的问题
 
 @ul
-- goes through the page DOM (slow)
-- adds extra layer of code on top of unstable DOM
-- duplicates code already in the app
+- 遍历页面整个DOM (慢)
+- 在不稳定的DOM上添加额外的代码层
+- 重复在应用程序中已有的代码
 @ulend
 
 +++
@@ -151,11 +151,11 @@ Application code
 
 +++
 
-## Code overhead
+## 代码开销
 
 @ul
-- What methods do you have in the Page Object?
-- What methods do you see in `todomvc-react/js/todoModel.js`?
+- 你在页面对象中用了什么方法?
+- 在 `todomvc-react/js/todoModel.js` 中看到了什么方法?
 @ulend
 
 +++
@@ -168,54 +168,54 @@ if (window.Cypress) {
 }
 ```
 
-## Todo: access `model` from DevTools console
+## 尝试: 从DevTools控制台访问`model`
 
 +++
 
-## Todo: create a todo from DevTools console
+## 尝试: 从DevTools控制台创建一个todo
 
-and toggle an item
-
-+++
-
-> 💡 Cypress can do anything you can do from the DevTools console
+切换待办状态
 
 +++
 
-## Todo: start a new file `spec.js`
-
-- gets the `window.model` instance
-- invokes `addTodo` to add several todos
-
-**tip:** use [`cy.invoke`](https://on.cypress.io/invoke)
-
-Note:
-Look up and improve `addTodo` method in `js/todoModel.js` if necessary
+> 💡 Cypress可以做你在DevTools控制台中可以做的任何事情
 
 +++
 
-## Todo: write a test for routing
+## 尝试: 创建一个新测试文件 `spec.js`
 
-- set up initial todos using app action `addTodo`
-- toggle an item or two
-- check if each view shows correct number of items
+- 获得 `window.model` 实例
+- 调用 `addTodo` 增加几个待办
 
-+++
+**提示:** 使用 [`cy.invoke`](https://on.cypress.io/invoke)
 
-## More tests
-
-Open and run `cypress/integration/13-app-actions/po-full-spec.js`. It has tests for
-
-- adding todos
-- editing
-- toggling
-- routing
+注意:
+需要的话，查看并改进 `js/todoModel.js`中的`addTodo` 方法
 
 +++
 
-Look at the group of tests for "New Todo". They all go through the DOM
+## 尝试: 为路由写一个测试
 
-Look at the group of tests for "Routing"
+- 使用应用程序行为 设置初始的待办事项 `addTodo`
+- 切换一两个待办的待办状态
+- 检查每个视图是否显示正确数量的待办
+
++++
+
+## 更多的测试
+
+打开并运行 `cypress/integration/13-app-actions/po-full-spec.js`.里面有如下测试
+
+- 添加待办
+- 编辑
+- 切换待办状态
+- 路由
+
++++
+
+查看 "New Todo"的一组测试. 它们都贯穿DOM
+
+看看"Routing"这组测试 
 
 ```js
 context('Routing', function () {
@@ -228,49 +228,49 @@ context('Routing', function () {
 
 +++
 
-Most of the Page Object method calls in this spec are to create initial data or change some data (like `toggle`) - same actions as in `todoModel.js`
+spec中的大多数页面对象方法的调用都是为了创建初始数据，或更改一些数据(类似 `toggle`) - 于 `todoModel.js`里面的行为一样
 
-- Are these tests faster than before? Why?
-- Are these tests coupled to the app's model or to the DOM?
+- 这些测试比以前快吗? 为什么?
+- 这些测试是耦合到应用程序的model还是DOM?
 
 +++
 
-## App actions rules
+## 应用程序的行为规则
 
 @ul
-- when testing feature X - the test goes through UI for feature X
-- when testing feature Y - the test uses app action to do X
+- 当测试功能 X 时- 通过UI对X进行功能测试 
+- 当测试功能 Y 时- 测试使用应用行为做了 X
 @ulend
 
-Note:
-You still cover all page features, you just don't cover them multiple times.
+注意:
+测试需要涵盖所有页面特性，只是没必要每次都需要.
 
 +++
 
-## Focused errors
+## 主要的错误
 
-### In `todomvc-react/js/todoItem.jsx`
+### 在 `todomvc-react/js/todoItem.jsx` 中
 
-Comment out line in the render function
+注释render函数中的行
 
 ```js
 onChange={this.props.onToggle}
 ```
 
-Which tests have failed?
+哪些测试失败了?
 
-Note:
-Only the tests for marking items as completed should fail, because the rest goes through the model to toggle an item.
+注意:
+只有将事项标记为已完成的测试才会失败,因为其余测试的是通过model来切换待办状态.
 
 +++
 
-## 🏁 App actions vs Page Objects
+## 🏁 应用程序行为 vs 页面对象
 
 @ul
-- Page Objects write an extra layer of code
-- App actions are a client of the application's model
-- App actions take shortcuts for faster tests
+- 页面对象编写了额外的一层代码
+- 应用程序行为是应用程序model的客户端
+- 应用程序行为采用快捷方式进行更快的测试
 @ulend
 
-Note:
-The extra layer of code in Page Objects is built on top of the DOM and events, which are not machine-linted. This layer also does not benefit the user, and just slows down the tests.
+注意:
+页面对象中额外的代码层是建立在非关键的DOM和事件之上的. 这些额外层对用户也没有好处，只会减慢测试速度.

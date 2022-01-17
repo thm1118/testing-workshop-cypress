@@ -1,30 +1,30 @@
-## ☀️ Part 14: Fixtures
+## ☀️ 第14部分:数据装置Fixtures
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to load and use data fixtures
-
-+++
-
-- start TodoMVC application using `npm start`
-- open `cypress/integration/14-fixtures/spec.js`
+- 如何加载和使用数据装置
 
 +++
 
-## Todo: reset server using a fixture
-
-⌨️ test "sets list of todos on the server"
-
-- load fixture file "cypress/integration/two-items.json"
-- post the list to "/reset" as `{ todos: list }`
-
-Tip: we are going to need [`cy.fixture`](https://on.cypress.io/fixture)
+- 用`npm start`启动  TodoMVC  
+- 打开 `cypress/integration/14-fixtures/spec.js`
 
 +++
 
-## Load fixture before each test
+## 尝试: 使用一个数据装置重置服务
 
-⌨️ test "closure variable"
+⌨️ 测试 "sets list of todos on the server"
+
+- 加载数据装置文件 "cypress/integration/two-items.json"
+- 以 `{ todos: list }`提交列表到 "/reset" 
+
+提示: 我们将需要  [`cy.fixture`](https://on.cypress.io/fixture)
+
++++
+
+## 在每个测试执行前，加载数据装置
+
+⌨️ 测试 "closure variable"
 
 ```js
 let list
@@ -39,9 +39,9 @@ it('sets list from context', () => {
 
 +++
 
-## Store data in test context
+## 在测试上下文中存储数据
 
-In Mocha, hooks like `before`, `beforeEach`, `it` can store data in "this" object, if the callbacks use "function () { ... }" form.
+在 Mocha 中, 与 `before`, `beforeEach`这些钩子一样, `it` 能在 "this" 对象上存储数据, 如果回调函数使用 "function () { ... }" 形式.
 
 ```js
 beforeEach(function () {
@@ -54,9 +54,9 @@ it('has foo', function () {
 
 +++
 
-## Load fixture before each test
+## 在每个测试执行前，加载数据装置
 
-⌨️ test context "this.list"
+⌨️ 测试上下文 "this.list"
 
 ```js
 context('this.list', () => {
@@ -75,26 +75,26 @@ context('this.list', () => {
 
 +++
 
-### ⚠️ Be careful trying to replace `beforeEach` with `before`
+### ⚠️ 用 `before`替换 `beforeEach` 时要小心
 
-⌨️ test context "this.list"
+⌨️ 测试上下文 "this.list"
 
-Try saving time by replacing `beforeEach` with `before`.
+尝试用 `before`替换 `beforeEach` 来保存变量.
 
-What happens? How do you solve this?
+会发生什么? 如何解决这个问题?
 
-Note:
-Each test wipes away the previous context object. Thus "this.list" becomes undefined when the second test runs. You can use closure variable instead of "this" to get around this. This is a common problem when trying to save time on login.
-
-+++
-
-## Fixtures recipe
-
-Check out the "Fixtures" recipe in [github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes) repository.
+注意:
+每个测试都会擦除前一个上下文对象. "this.list"在第二个测试运行时变为未定义. 你可以使用闭包变量代替"this"来解决这个问题. 在试图节省登录时间时，这是一个常见问题.
 
 +++
 
-## Log in once
+## 数据装置的配方
+
+查看数据装置配方 [github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes) repository.
+
++++
+
+## 仅登录一次
 
 ```js
 let token
@@ -112,14 +112,14 @@ beforeEach(() => {
 // each test is logged in
 ```
 
-Note:
-This is common solution to speeding up slow login - log in once, then store cookies and tokens and set them before each test.
+注意:
+这是加速慢速登录的常见解决方案 - 仅登录一次, 然后存储cookie和令牌，并在每次测试前设置它们.
 
 +++
 
-## `@ = this` shortcut
+## `@ = this` 快捷方式
 
-⌨️ test context "@list"
+⌨️ 测试上下文 "@list"
 
 ```js
 beforeEach(function () {
@@ -133,24 +133,23 @@ it('works', function () {
 
 +++
 
-## Remember the queue of commands
+## 记住命令的队列
 
 ```js
 it('does not work', function () {
   cy.fixture('two-items').as('list')
-  // we are using "this.list" BEFORE it was set in
-  // the above asynchronous call
+  // "this.list" 在上面的异步调用中尚未设置完成，此时立即断言会失败
   expect(this.list).to.have.length(2)
   cy.request('POST', '/reset', { todos: this.list })
 })
 ```
 
-Note:
-Walk through each line to number the order in which commands are executed
+注意:
+测试执行是遍历每一行，按顺序执行命令
 
 +++
 
-## Add command to the queue
+## 向队列中添加命令
 
 ```js
 it('works if we change the order', function () {
@@ -164,30 +163,30 @@ it('works if we change the order', function () {
 })
 ```
 
-Note:
-Using `cy.then` to schedule another callback will solve the problem.
+注意:
+通过 `cy.then` 调度其他回调的方式来解决问题.
 
 +++
 
-## Fixtures in different encoding
+## 不同编码的数据装置
 
-Todo: in file `cypress/support/index.js` uncomment
+尝试: 在 `cypress/support/index.js` 文件中取消注释
 
 ```js
 require('cypress-dark/src/halloween')
 ```
 
-Run at least one failing test
+运行至少失败一次的测试
 
 +++
 
 ![Halloween theme](./img/halloween.png)
 
-How did the test load and play MP3?
+测试如何加载和播放MP3?
 
 +++
 
-In `node_modules/cypress-dark/halloween.js`
+在 `node_modules/cypress-dark/halloween.js`文件中
 
 ```js
 const witchLaughs = () => {
@@ -202,7 +201,7 @@ const witchLaughs = () => {
 
 +++
 
-You can do the same with MP3 files in your fixtures folder
+您也可以对fixture文件夹中的MP3文件执行同样的操作
 
 ```js
 cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
@@ -215,7 +214,7 @@ cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
 
 +++
 
-## Other formats
+## 其他格式
 
 ```js
 cy.fixture('images/logo.png').then((logo) => {
@@ -232,9 +231,9 @@ cy.fixture('images/logo.png', 'binary').then((logo) => {
 
 +++
 
-## `readFile` and `writeFile`
+## `readFile` 与 `writeFile`
 
-`cy.readFile` will retry until file exists and assertions that follow it pass
+`cy.readFile` 将重试，直到文件存在以及之后的断言通过
 
 ```js
 // note: path is relative to the project's root
@@ -246,7 +245,7 @@ cy.readFile('some/nested/path/story.txt')
 
 +++
 
-## Todo `readFile` after POST
+## 尝试 在POST之后 `readFile`
 
 ```js
 it('reads items loaded from fixture', () => {
@@ -260,7 +259,7 @@ it('reads items loaded from fixture', () => {
 ```
 
 +++
-## Todo `readFile` entered through UI
+## 尝试 通过UI输入后 `readFile` 
 
 ```js
 it('saves todo', () => {
@@ -272,16 +271,16 @@ it('saves todo', () => {
 ```
 
 +++
-## 🏁 Fixtures
+## 🏁 数据装置Fixtures
 
-Fixtures are data object for testing and network stubs
-
-+++
-## 🏁 Fixtures
-When loading fixtures remember JavaScript + Mocha lifecycle and `this` context
+fixture是用于测试和网络模拟的数据对象
 
 +++
-## 🏁 Fixtures
+## 🏁 数据装置Fixtures
+当加载fixture时，注意 JavaScript + Mocha 生命周期和`this`上下文
+
++++
+## 🏁 数据装置Fixtures
 
 - [`cy.fixture`](https://on.cypress.io/fixture)
-- "Fixtures" recipe in [github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes)
+- "Fixtures" 的配方 [github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes)
