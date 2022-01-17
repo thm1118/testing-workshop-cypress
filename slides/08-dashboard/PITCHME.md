@@ -1,16 +1,16 @@
-## ☀️ Part 8: The Dashboard
+## ☀️ 第8部分: Dashboard仪表盘
 
-### 📚 You will learn
+### 📚 您将学习
 
-- Purpose for Cypress Dashboard
-- How to send test results to Cypress Dashboard
-- Test parallelization using Cypress Dashboard
+- Cypress Dashboard的目的
+- 如何将测试结果发送到Cypress Dashboard
+- 使用Cypress Dashboard 执行并行测试
 
 +++
 
-- CI is nice, but
-  - artifacts are all over the place
-  - no consistent view of the tests
+- CI 很棒，但是
+  - 到处都是制品
+  - 没有一致的测试视图
 
 +++
 
@@ -20,43 +20,43 @@
 
 +++
 
-- store test results and videos
-- insight into each failure
-- parallel test execution
-- GitHub integration
-- analytics (WIP)
+- 存储测试结果和视频
+- 洞察每一次失败
+- 并行测试执行
+- GitHub集成
+- 分析(正在制作)
 
 +++
 
-- extend work in `07-ci` folder
-- open Cypress test runner in interactive mode
-- click "Runs / Set up project to record"
+- 扩展`07-ci`文件夹中的工作
+- 在交互模式下打开Cypress测试运行器
+- 点击 "Runs / Set up project to record"
 
 ![Set up project to record](./img/set-up-project-to-record.png)
 
 +++
 
-## Record your test runs
+## 记录您的测试
 
-- record a test run locally
-- look at the test results at Cypress dashboard
-- set the variables and commands to record from CI
+- 记录本地的测试运行
+- 在Cypress仪表盘上查看测试结果
+- 设置从CI记录的变量和命令
 
-**tip** [https://on.cypress.io/dashboard-faq](https://on.cypress.io/dashboard-faq)
-
-+++
-
-## Bonus
-
-- pass record key as an environment variable
-- make a test to fail on purpose
-- look at the test failure on the dashboard
+**提示** [https://on.cypress.io/dashboard-faq](https://on.cypress.io/dashboard-faq)
 
 +++
 
-## Big bonus: Parallelization
+## 意外收获
 
-- run tests on N machines in 1/N time with [https://on.cypress.io/parallelization](https://on.cypress.io/parallelization)
+- 将记录key作为环境变量传递
+- 故意让测试失败
+- 查看仪表板上的失败的测试
+
++++
+
+## 大好处:并行化
+
+- 以1-N次的次数在N台机器上运行测试 [https://on.cypress.io/parallelization](https://on.cypress.io/parallelization)
 - 📺 [Cypress parallelization webinar](https://youtu.be/FfqD1ExUGlw)
 
 ```sh
