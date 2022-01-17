@@ -3,7 +3,7 @@
 - [github.com/cypress-io/testing-workshop-cypress](https://github.com/cypress-io/testing-workshop-cypress)
 
 跳转: [00-开始](?p=00-start), [01-基础](?p=01-basic), [02-添加条目](?p=02-adding-items), [03-选择器](?p=03-selector-playground), [04-重置状态](?p=04-reset-state), [05-xhr](?p=05-xhr), [06-应用数据存储](?p=06-app-data-store), [07-ci](?p=07-ci), [08-官方仪表盘](?p=08-dashboard), [09-报表](?p=09-reporters), [10-配置](?p=10-configuration), [11-重试能力](?p=11-retry-ability)
-, [12-自定义命令](?p=12-custom-commands), [13-app操作](?p=13-app-actions), [14-夹具](?p=14-fixtures), [15-调试](?p=15-debugging), [16-预处理器](?p=16-preprocessors)
+, [12-自定义命令](?p=12-custom-commands), [13-app行为](?p=13-app-actions), [14-数据装置](?p=14-fixtures), [15-调试](?p=15-debugging), [16-预处理器](?p=16-preprocessors)
 , [17-组件测试](?p=17-component-testing), [18-后端](?p=18-backend), [19-代码覆盖率](?p=19-code-coverage), [20-模拟](?p=20-stubbing)
 , [结尾](?p=end)
 

@@ -1,23 +1,23 @@
-## ☀️ Part 19: Code Coverage
+## ☀️ 第19部分: 代码覆盖率
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to collect code coverage information
-- how to write e2e tests effectively using code coverage as your 🗺
-
-+++
-
-## ⚠️ use `todomvc-redux` application
-
-- stop TodoMVC
-- in one terminal go into `todomvc-redux` and `npm start` there
-
-Note:
-This will start application and instrument the code on the fly
+- 如何收集代码覆盖信息
+- 如何编写端到端测试时有效地使用代码覆盖率 🗺
 
 +++
 
-Open `localhost:3000` and observe instrumented code (the `.js` bundle). The original code can be seen via source maps.
+## ⚠️ 使用 `todomvc-redux` 应用
+
+- 停止 TodoMVC
+- 在一个终端进入 `todomvc-redux`目录，并在该目录下执行 `npm start` 
+
+注意:
+这将启动应用程序并实时检测代码
+
++++
+
+打开 `localhost:3000` 并观察注入的测试代码 (the `.js` bundle). 原始代码可以通过源代码映射看到。
 
 +++
 
@@ -25,27 +25,27 @@ Open `localhost:3000` and observe instrumented code (the `.js` bundle). The orig
 
 +++
 
-The code coverage object keeping track of all code lines hit is in the `window.__coverage__` object.
+跟踪所有代码行命中的代码覆盖对象是`window.__coverage__`.
 
-Note:
-Explain its structure
-
-+++
-
-We are going to use [@cypress/code-coverage][plugin] plugin to manage and save this `window.__coverage__` object and generate coverage reports.
-
-## Todo
-
-- enable `@cypress/code-coverage` lines in `cypress/support/index.js` file
-- enable `@cypress/code-coverage` lines in `cypress/plugins/index.js` file
+注意:
+解释它的结构
 
 +++
 
-## Todo
+我们将用 [@cypress/code-coverage][plugin] 插件来管理和保存 `window.__coverage__` 对象，并生成覆盖率报表.
 
-- start Cypress with `npm run cy:open`
-- execute test `cypress/integration/19-code-coverage/spec.js`
-- open generated `coverage/index.html` in your browser
+## 尝试
+
+- 在 `cypress/support/index.js` 中 启用 `@cypress/code-coverage` 行
+- 在 `cypress/plugins/index.js` 中启用 `@cypress/code-coverage` 行
+
++++
+
+## 尝试
+
+-  `npm run cy:open` 启动cypress
+- 执行测试 `cypress/integration/19-code-coverage/spec.js`
+- 在浏览器中打开生成的报表 `coverage/index.html` 
 
 +++
 
@@ -53,15 +53,15 @@ We are going to use [@cypress/code-coverage][plugin] plugin to manage and save t
 
 +++
 
-Drill down into individual files, for example todos reducer
+深入到单个文件，例如todos reducer
 
 ![Reducer coverage report](./img/reducer.png)
 
 +++
 
-## Todo 1/3
+## 尝试 1/3
 
-- see code coverage summary from the terminal with
+- 查看来自终端的代码覆盖摘要
 
 ```shell
 npx nyc report --reporter=text
@@ -70,9 +70,9 @@ npx nyc report --reporter=text-summary
 
 +++
 
-## Todo 2/3
+## 尝试 2/3
 
-- see code coverage HTML report
+- 查看代码覆盖率HTML报告
 
 ```shell
 open coverage/lcov-report/index.html
@@ -80,28 +80,28 @@ open coverage/lcov-report/index.html
 
 +++
 
-## Todo 3/3
+## 尝试 3/3
 
-- add tests to cover more source lines
+- 添加测试以覆盖更多的源代码行
 
-**Note:** this application does not have data persistance or server API calls
-
-+++
-
-## Advanced
-
-Can you cover every line via end-to-end tests? How about edge cases?
+**注意:** 此应用程序没有数据持久化或服务API调用
 
 +++
-## 🏁 Code coverage
 
-[@cypress/code-coverage][plugin] plugin manages coverage information from e2e and unit tests and generates HTML report
+## 高级
+
+你能通过端到端测试覆盖每一行吗? 那么边界情况呢?
 
 +++
-## 🏁 Code coverage
+## 🏁 代码覆盖率
 
-Read Cypress code coverage guide at [https://on.cypress.io/code-coverage](https://on.cypress.io/code-coverage)
+[@cypress/code-coverage][plugin] 插件用来管理 从e2e到单元测试的覆盖率信息，并生成HTML报告
 
-Idea: you can send code coverage information to external services. Read [https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/](https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/)
++++
+## 🏁 代码覆盖率
+
+阅读Cypress代码覆盖指南 [https://on.cypress.io/code-coverage](https://on.cypress.io/code-coverage)
+
+想法:您可以将代码覆盖信息发送到外部服务。阅读 [https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/](https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/)
 
 [plugin]: https://github.com/cypress-io/code-coverage

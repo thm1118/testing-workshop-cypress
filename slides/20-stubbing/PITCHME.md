@@ -1,13 +1,13 @@
-## ☀️ Stubbing methods
+## ☀️ 模拟方法
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to spy on the methods
-- how to stub methods
-- how to register stubs before the application code
+- 如何进行监控活动的方法
+- 如何模拟方法
+- 如何在应用程序代码执行前注册模拟
 
 ---
-The application includes "analytics" library
+该应用程序包括`analytics`库
 
 ```js
 window.track = (eventName) => {
@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
 })
 ```
 
-The application calls the `track` method when adding and removing todos
+应用程序在添加和删除待办事项时调用`track`方法
 
 ```js
 track('todo.add', todo.title)
@@ -27,14 +27,14 @@ track('todo.remove', todo.title)
 ```
 
 ---
-## Let's spy on those calls
+## 我们来监视那些调用
 
-- [cy.spy](https://on.cypress.io/spy) observes the method calls
+- [cy.spy](https://on.cypress.io/spy) 观察方法调用
 
 ```js
 it('works on click', () => {
   cy.visit('/').then((win) => {
-    // need an object and a method name
+    // 需要一个对象和一个方法名
     cy.spy(win, 'track').as('track')
   })
   enterTodo('write code')
@@ -43,12 +43,12 @@ it('works on click', () => {
 })
 ```
 
-**Tip:** read https://on.cypress.io/stubs-spies-and-clocks#Assertions
+**提示:** 阅读 https://on.cypress.io/stubs-spies-and-clocks#Assertions
 
 ---
-## Stub the method call
+## 模拟方法调用
 
-- with [cy.stub](https://on.cypress.io/stub) the original method is not called
+- 使用 [cy.stub](https://on.cypress.io/stub) 原始方法不会被打调用
 
 ```js
 it('works on click', () => {
@@ -62,7 +62,7 @@ it('works on click', () => {
 ```
 
 +++
-## TODO: Confirm adding and removing todos
+## 尝试: 确认添加和删除待办事项
 
 ```js
 it('tracks item delete', () => {
@@ -75,7 +75,7 @@ it('tracks item delete', () => {
 ```
 
 +++
-## TODO: reset the count
+## 尝试: 重置计数
 
 ```js
 it('resets the count', () => {
@@ -98,7 +98,7 @@ it('resets the count', () => {
 ```
 
 ---
-## What if object changes
+## 如果对象改变了怎么办
 
 ```js
 it('stops working if window changes', () => {
@@ -117,11 +117,11 @@ it('stops working if window changes', () => {
 })
 ```
 
-Why hasn't the `window.track` been called the second time?
+为什么 `window.track` 没有被调用两次?
 
 +++
 
-Forward call to the same stub function
+将调用前转到相同的模拟函数
 
 ```js
 it('adds stub after reload', () => {
@@ -134,9 +134,9 @@ it('adds stub after reload', () => {
 ```
 
 ---
-## What about window.track on load?
+## 在加载时，window.track 会咋样 ?
 
-We know the property that will be assigned `window.track = fn`, we need to grab it.
+我们知道会被属性赋值`window.track = fn`, 我们需要抓住它.
 
 ```js
 it('works on load', () => {
@@ -151,7 +151,7 @@ it('works on load', () => {
 ```
 
 +++
-## Improvement: do this for every window
+## 改进: 对每个窗口都这样做
 
 ```js
 it('works via event handler', () => {
@@ -164,16 +164,16 @@ it('works via event handler', () => {
 })
 ```
 
-Confirm the number of `window.track('load')` calls with `cy.visit` + `cy.reload`
+确认 `window.track('load')` 使用 `cy.visit` + `cy.reload` 触发的次数
 
 ---
-## 📚 See also
+## 📚 另请参阅
 
-- Read Cypress "Stubs, Spies, and Clocks" guide at [https://on.cypress.io/stubs-spies-and-clocks](https://on.cypress.io/stubs-spies-and-clocks)
-- "Stubbing and spying" recipes at [https://github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
+- 阅读 Cypress "Stubs, Spies, and Clocks" 指南 [https://on.cypress.io/stubs-spies-and-clocks](https://on.cypress.io/stubs-spies-and-clocks)
+- "Stubbing and spying" 配方 [https://github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
 
 ---
-## 🏁 Stubbing methods
+## 🏁 模拟方法
 
-- To create a spy or a stub you need an object and the method name
-- Prepare for methods called on load using `onBeforeLoad` or via `cy.on('window:before:load', ...)`
+- 要创建间谍或模拟，您需要一个对象和方法名
+- 为load 时调用的方法做准备，使用 `onBeforeLoad` 或通过 `cy.on('window:before:load', ...)`

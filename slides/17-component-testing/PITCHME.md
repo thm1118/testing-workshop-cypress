@@ -1,11 +1,11 @@
-## ☀️ Part 17: Component Testing
+## ☀️ 第17部分: 组件测试
 
-### 📚 You will learn
+### 📚 您将学习
 
-- how to test React components in isolation
+- 如何单独测试React组件
 
 +++
-## Component testing
+## 组件测试
 
 * [cypress-react-unit-test](https://github.com/bahmutov/cypress-react-unit-test)
 * [cypress-vue-unit-test](https://github.com/bahmutov/cypress-vue-unit-test)
@@ -18,9 +18,9 @@
 [on.cypress.io/plugins#component-testing](http://on.cypress.io/plugins#component-testing)
 
 +++
-## 💡 Idea
+## 💡 理解
 
-Instead of loading an HTML page, create an empty page and mount a component X
+创建一个空页面并挂载组件X，而不是加载一个HTML页面
 +++
 
 ```jsx
@@ -34,17 +34,17 @@ describe('HelloWorld component', () => {
 })
 ```
 
-**⚠️ note:** component testing API is likely to change
+**⚠️ 注意:** 组件测试API可能会改变
 
 +++
 
 ![Hello World component test](./img/hello-world.png)
 
 +++
-## First component test
+## 第一个组件测试
 
-- **stop** TodoMVC application
-- open `cypress/integration/17-component-testing/footer-spec.js`
+- **停止** TodoMVC 应用
+- 打开 `cypress/integration/17-component-testing/footer-spec.js`
 
 +++
 
@@ -56,16 +56,16 @@ import Footer from './Footer'
 import 'cypress-react-unit-test'
 import { filters } from './filters'
 ```
-Note how we are loading React components and application code directly from the spec file
+注意我们是如何直接从spec文件中加载React组件和应用程序代码的
 
 +++
 
-## Todo: first component test
+## 尝试: 第一个组件测试
 
-⌨️ test "shows Footer"
+⌨️ 测试 "shows Footer"
 
-- mount component
-- link "all" should have selected class
+- 挂载组件
+- 连接 "all" 应该有 selected 样式
 
 +++
 
@@ -73,59 +73,59 @@ Note how we are loading React components and application code directly from the 
 
 +++
 
-## Todo: test on click
+## 尝试: 测试单击
 
-⌨️ test "clears completed on click"
+⌨️ 测试 "clears completed on click"
 
-- mount component
-- pass stub to "onClearCompleted" prop
-- check if "clear completed" button is visible and click
+- 挂载组件
+- 传递模拟给 "onClearCompleted" prop
+- 检查 "clear completed" 按钮是否可视，并单击
 
 +++
 ![on click test](./img/on-click.png)
 
 +++
-## Component testing vs E2E
+## 组件测试vs E2E
 
-- components are like micro web applications
-
-+++
-## Unit tests vs E2E
-
-### Unit tests
-
-- focus on code
-- short
-- black box
+- 组件就像微型web应用程序
 
 +++
-## Unit tests vs E2E
+## 单元测试 vs E2E
 
-### end-to-end tests
+### 单元测试
 
-- focus on a feature
-- long
-- external effects
-
-+++
-## Unit tests AND E2E
-
-- focus on one thing
-- gives you confidence
-- runs locally and on CI
+- 聚焦代码
+- 短
+- 黑盒
 
 +++
-## 🏁 Component testing
+## 单元测试 vs E2E
+
+### 端到端测试
+
+- 聚焦于功能
+- 长
+- 外部效果
+
++++
+## 单元测试 和 E2E
+
+- 聚焦于一件事
+- 给你信心
+- 在本地和CI上运行
+
++++
+## 🏁 组件测试
 
 @ul
-Instead of visiting a page, you mount a component.
-Then you test it the same way as a full E2E test.
+你不是访问一个页面，而是挂载一个组件。
+然后您将以与完整的端到端测试相同的方式进行测试。
 @ulend
 
 +++
-## 🏁 Component testing: more info
+## 🏁 组件测试:更多信息
 
 - [cypress-react-unit-test](https://github.com/bahmutov/cypress-react-unit-test)
 - [on.cypress.io/plugins#component-testing](https://on.cypress.io/plugins#component-testing)
 - [github.com/bahmutov/calculator](https://github.com/bahmutov/calculator)
-- blog post [Sliding Down the Testing Pyramid](https://www.cypress.io/blog/2018/04/02/sliding-down-the-testing-pyramid/)
+- 博客 [Sliding Down the Testing Pyramid](https://www.cypress.io/blog/2018/04/02/sliding-down-the-testing-pyramid/)

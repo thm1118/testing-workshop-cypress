@@ -1,32 +1,32 @@
-## ☀️ Part 16: Preprocessors
+## ☀️ 第16部分: 预处理器
 
-A preprocessor is the plugin responsible for preparing a support file or a test file for the browser.
-
-+++
-### 📚 You will learn
-
-- how to change options when bundling specs
-- how to use TypeScript specs
+预处理器是负责为浏览器准备支持文件或测试文件的插件.
 
 +++
-## Not covered
+### 📚 您将学习
 
-Writing your own preprocessor, see [on.cypress.io/preprocessors-api](https://on.cypress.io/preprocessors-api) for how
+- 构建spec时如何更改选项
+- 如何使用TypeScript 的specs
+
++++
+## 不包括
+
+编写自己的预处理器, 查看 [on.cypress.io/preprocessors-api](https://on.cypress.io/preprocessors-api) 来获知如何编写
 
 +++
 
-- start TodoMVC application using `npm start`
-- open `cypress/integration/16-preprocessors/spec.js`
+- 使用`npm start` 启动 TodoMVC  
+- 打开 `cypress/integration/16-preprocessors/spec.js`
 
 +++
 ## Specs
 
-Are bundled by default using [Cypress browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
+默认捆绑了 [Cypress browserify 预处理器](https://github.com/cypress-io/cypress-browserify-preprocessor)
 
-Or you can use [Cypress webpack preprocessor](https://github.com/cypress-io/cypress-webpack-preprocessor)
+或者你能使用 [Cypress webpack 预处理器](https://github.com/cypress-io/cypress-webpack-preprocessor)
 
 +++
-## Default options
+## 默认选项
 
 ```sh
 npm i -D @cypress/browserify-preprocessor
@@ -40,7 +40,7 @@ module.exports = (on, config) => {
 ```
 
 +++
-## Changing options
+## 变更选项
 
 ```js
 // cypress/plugins/index.js
@@ -52,13 +52,13 @@ module.exports = (on, config) => {
 }
 ```
 
-Note:
-Instead of specifying all new options, modify a deep property inside the default options.
+注意:
+与其指定所有新选项，不如修改默认选项中的深层属性.
 
 +++
-## Todo: print default options
+## 尝试: 打印所有默认选项
 
-Add `debug` call to show default browserify options used to bundle spec files
+添加`debug`调用来显示用于捆绑spec文件的默认browserify选项
 
 ```js
 // cypress/plugins/index.js
@@ -79,31 +79,31 @@ module.exports = (on, config) => {
 ![Default options](./img/default-options.png)
 
 +++
-We need to print deeper options. Use `DEBUG_DEPTH=10`
+我们需要打印更深的选项。使用 `DEBUG_DEPTH=10`
 
 ![Default options deep](./img/default-options-deep.png)
 
 +++
 
-Includes 2 transforms by default
+默认情况下包含2个转换器
 
-- [coffeeify](https://github.com/jnordberg/coffeeify) with no options
-- [babelify](https://github.com/babel/babelify) with plugins and presets
+- [coffeeify](https://github.com/jnordberg/coffeeify) 无选项
+- [babelify](https://github.com/babel/babelify) 带有插件和预设
   * `babel-plugin-add-module-exports`
   * `plugin-proposal-class-properties`
   * `plugin-proposal-object-rest-spread`
   * `@babel/preset-env`
   * `@babel/preset-react`
 
-Look at the test code that transpile in `spec.js`, including JSX
+看看在`spec.js`中待编译的测试代码，包括JSX
 
 +++
 
-## Todo: add Babel plugin
+## 尝试: 添加 Babel 插件
 
-Let's enable [`do` notation]() in our spec
+让我们在spec中启用 [`do` 注解]() 
 
-⌨️ test "transpiles do expression"
+⌨️ 测试 "transpiles do expression"
 
 +++
 
@@ -116,9 +116,9 @@ on('file:preprocessor', browserify(options))
 ```
 
 +++
-## 👍 Alternative: add .babelrc file
+## 👍 可选: 添加 .babelrc 文件
 
-Create `.babelrc` file
+创建 `.babelrc` 文件
 ```json
 {
   "plugins": [
@@ -126,15 +126,15 @@ Create `.babelrc` file
   ]
 }
 ```
-and enable `babelOptions.babelrc = true` option.
+并启用 `babelOptions.babelrc = true` 选项.
 
-Note:
-Plugins list is concatenated from default and `.babelrc` list.
+注意:
+插件列表是 默认选项和`.babelrc`列表的合并.
 
 +++
-## Todo: add your own plugin
+## 尝试: 添加自己的插件
 
-Find a plugin in [https://babeljs.io/docs/en/next/plugins](https://babeljs.io/docs/en/next/plugins) and add it to the Babel plugins and write test that uses the new notation. Good candidates
+在[https://babeljs.io/docs/en/next/plugins](https://babeljs.io/docs/en/next/plugins) 中找一个插件 并将其添加到Babel插件中，并编写使用新注解的测试. 优秀候选插件有
 
 - function bind
 - pipeline operator
@@ -143,9 +143,9 @@ Find a plugin in [https://babeljs.io/docs/en/next/plugins](https://babeljs.io/do
 +++
 ## Browserify TypeScript specs
 
-Based on [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify) example recipe.
+基于 [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify) 示例配方.
 
-Open test file `ts-example.ts`
+打开测试文件 `ts-example.ts`
 
 +++
 
@@ -153,18 +153,18 @@ Open test file `ts-example.ts`
 
 +++
 
-**Todo:** use Browserify plugin `tsify` in `plugins/index.js` to transpile TypeScript specs
+**尝试:** 在`plugins/index.js` 中使用 Browserify 插件 `tsify` 来编译 TypeScript specs
 
-- need to install TypeScript and plugin
-- need to set up preprocessor
-- need to have `tsconfig.json`
+- 需要安装TypeScript和插件
+- 需要设置预处理器
+- 需要有 `tsconfig.json`
 
-**Tip:** [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify) example recipe
+**提示:** [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-browserify) 例子配方
 
-**Tip:** pay attention to any error messages in the terminal
+**提示:** 注意终端中出现的错误信息
 
 +++
-## Install
+## 安装
 
 ```sh
 npm i -D typescript tsify
@@ -172,7 +172,7 @@ npm i -D typescript tsify
 
 +++
 
-## Preprocessor
+## 预处理器
 
 ```js
 // plugins/index.js
@@ -205,31 +205,31 @@ on('file:preprocessor', browserify(options))
 ```
 
 +++
-## TypeScript with Webpack
+## TypeScript 和 Webpack
 
-See [Preprocessors TypeScript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack) example recipe
+查看 [Preprocessors TypeScript with Webpack](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__typescript-webpack) 示例配方
 
-You can use [bahmutov/add-typescript-to-cypress](https://github.com/bahmutov/add-typescript-to-cypress) to set it up.
-
-+++
-## Common TypeScript problems
-
-- clashing 3rd party `@types` fixing in [#3371](https://github.com/cypress-io/cypress/issues/3371)
-- Jest vs Chai `expect` global
-- incorrect type definitions
-- transpile `plugins/index` itself
+可以使用 [bahmutov/add-typescript-to-cypress](https://github.com/bahmutov/add-typescript-to-cypress) 来设置.
 
 +++
-## 📖 TypeScript Deep Dive
+## 常见 TypeScript 问题
 
-Free to read ebook at [basarat.gitbooks.io/typescript](https://basarat.gitbooks.io/typescript/)
-
-Has a great Cypress section [/testing/cypress.html](https://basarat.gitbooks.io/typescript/docs/testing/cypress.html)
+- 第三方冲突 `@types` 的修订  [#3371](https://github.com/cypress-io/cypress/issues/3371)
+- Jest vs Chai `expect` 全局
+- 错误的类型定义
+- 转译 `plugins/index` 自身
 
 +++
-## 👍 Use Webpack preprocessor
+## 📖 TypeScript 深入
 
-If your project already uses `webpack.config.js`
+阅读免费电子书 [basarat.gitbooks.io/typescript](https://basarat.gitbooks.io/typescript/)
+
+有一个伟大的Cypress部分 [/testing/cypress.html](https://basarat.gitbooks.io/typescript/docs/testing/cypress.html)
+
++++
+## 👍 使用Webpack预处理器
+
+如果您的项目已经使用 `webpack.config.js`
 
 ```sh
 npm i -D @cypress/webpack-preprocessor
@@ -248,7 +248,7 @@ module.exports = (on) => {
 ```
 
 +++
-## 🏁 You can control how spec files are transpiled
+## 🏁 您可以控制如何编译spec文件
 
-- modify default browserify options
-- overwrite or use Webpack bundler
+- 修改默认的browserify选项
+- 覆盖或使用Webpack bundle

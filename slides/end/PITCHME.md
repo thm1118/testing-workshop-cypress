@@ -1,25 +1,25 @@
-## 🔖 Workshop lessons
+## 🔖 工作坊课程
 
-- Write E2E tests to mimic user's actions
-- Set the initial state before each test
-
-+++
-
-## 🔖 Workshop lessons
-
-- Spy / stub API calls and application code
+- 编写端到端测试来模拟用户的操作
+- 设置每次测试前的初始状态
 
 +++
 
-## 🔖 Workshop lessons
+## 🔖 工作坊课程
 
-- Anything you can do from DevTools console, you can do from your Cypress tests
+- 间谍/ 模拟 API调用和应用程序代码
 
 +++
 
-## The End 🎉
+## 🔖 工作坊课程
 
-Thank you for learning E2E testing with [Cypress.io](https://www.cypress.io)
+- 您可以从DevTools控制台执行的任何操作，都可以从您的Cypress测试执行
+
++++
+
+## 结束 🎉
+
+感谢您学习端到端测试  [Cypress.io](https://www.cypress.io)
 
 - [https://docs.cypress.io/](https://docs.cypress.io/)
 - [https://github.com/cypress-io/cypress](https://github.com/cypress-io/cypress) - don't forget to give it a ✨
