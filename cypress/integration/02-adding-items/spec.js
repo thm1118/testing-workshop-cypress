@@ -1,71 +1,69 @@
 /// <reference types="cypress" />
-it('loads', () => {
+it('加载', () => {
   // application should be running at port 3000
   cy.visit('localhost:3000')
   cy.contains('h1', 'todos')
 })
 
-// IMPORTANT ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-// remember to manually delete all items before running the test
-// IMPORTANT ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+// 重要 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+// 记住在运行测试之前，需要手动删除所有待办事项
+// 重要 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-it('adds two items', () => {
-  // repeat twice
-  //    get the input field
-  //    type text and "enter"
-  //    assert that the new Todo item
-  //    has been added added to the list
+it('添加2个待办', () => {
+  // 重复两次
+  //    获得 input 字段
+  //    输入文本并"回车"
+  //    断言 新添加的 待办事项 被正确添加到列表中
   // cy.get(...).should('have.length', 2)
 })
 
-it('can mark an item as completed', () => {
-  // adds a few items
-  // marks the first item as completed
-  // confirms the first item has the expected completed class
-  // confirms the other items are still incomplete
+it('能将待办事项标记为已完成', () => {
+  // 添加一些新待办
+  // 将第一个待办标记为已完成
+  // 确认第一个待办的样式类为 completed
+  // 确认其他待办的样式类仍然 incomplete
 })
 
-it('can delete an item', () => {
-  // adds a few items
-  // deletes the first item
-  // use force: true because we don't want to hover
-  // confirm the deleted item is gone from the dom
-  // confirm the other item still exists
+it('能删除一个待办', () => {
+  // 添加一些待办
+  // 删除第一个待办
+  // 使用 force: true 因为我们不想用鼠标悬停
+  // 确认删除的待办已从dom中删除
+  // 确认其他待办仍然存在
 })
 
-it('can add many items', () => {
+it('能添加许多待办', () => {
   const N = 5
   for (let k = 0; k < N; k += 1) {
-    // add an item
-    // probably want to have a reusable function to add an item!
+    // 添加一个待办
+    // 可能需要一个可重用的函数来添加待办!
   }
-  // check number of items
+  // 检查待办的数量
 })
 
-it('adds item with random text', () => {
-  // use a helper function with Math.random()
-  // or Cypress._.random() to generate unique text label
-  // add such item
-  // and make sure it is visible and does not have class "completed"
+it('添加随机文本的待办', () => {
+  // 使用包含Math.random()的 辅助函数
+  // 或者 Cypress._.random() 生成唯一的文本标签
+  // 添加这些待办
+  // 并确认这些待办是可见的，没有样式类 "completed"
 })
 
-it('starts with zero items', () => {
-  // check if the list is empty initially
-  //   find the selector for the individual TODO items
-  //   in the list
-  //   use cy.get(...) and it should have length of 0
+it('从零个待办开始', () => {
+  // 检查列表是否为空
+  //   找到列表中每个TODO项的选择器
+  //   使用 cy.get(...) 以及确认列表长度 应该为 0
   //   https://on.cypress.io/get
 })
 
-it('does not allow adding blank todos', () => {
+it('不允许添加空白待办事项', () => {
   // https://on.cypress.io/catalog-of-events#App-Events
   cy.on('uncaught:exception', () => {
-    // check e.message to match expected error text
-    // return false if you want to ignore the error
+    // 检查 e.message 来匹配期望的错误文博
+    // 如果忽略错误则返回false
   })
 
-  // try adding an item with just spaces
+  // 尝试添加一个只有空格的 待办
 })
 
-// what a challenge?
-// test more UI at http://todomvc.com/examples/vue/
+// 有哪些困难?
+// 更多的UI测试 http://todomvc.com/examples/vue/

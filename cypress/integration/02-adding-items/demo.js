@@ -2,7 +2,7 @@
 const isLocalHost = () => Cypress.config('baseUrl').includes('localhost')
 
 if (isLocalHost()) {
-  // we can reset data only when running locally
+  // 只有在本地运行时才能重置数据
   beforeEach(function resetData() {
     cy.request('POST', '/reset', {
       todos: []
@@ -15,7 +15,7 @@ beforeEach(function visitSite() {
   cy.visit('/')
 })
 
-it('adds items', function () {
+it('添加多个待办事项', function () {
   cy.get('.new-todo')
     .type('todo A{enter}')
     .type('todo B{enter}')
