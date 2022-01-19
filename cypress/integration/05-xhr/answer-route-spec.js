@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-// note, we are not resetting the server before each test
+// 注意，我们不会在每次测试前重新设置服务
 it('starts with zero items (waits)', () => {
   cy.visit('/')
   /* eslint-disable-next-line cypress/no-unnecessary-waiting */
@@ -8,7 +8,6 @@ it('starts with zero items (waits)', () => {
 })
 
 it('starts with zero items', () => {
-  // start Cypress network server
   // spy on route `GET /todos`
   // THEN visit the page
   cy.server()

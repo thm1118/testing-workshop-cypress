@@ -1,62 +1,63 @@
 /// <reference types="cypress" />
 //
-// note, we are not resetting the server before each test
+// 注意，我们不会在每次测试前重新设置服务
+// 并且我们想确认如果应用程序已经有待办，这些测试就会失败
+// (例如，使用浏览器访问 localhost:3000，手动添加它们)
 //
 
 // see https://on.cypress.io/intercept
 
-it('starts with zero items (waits)', () => {
+it('从零个待办开始 (等待)', () => {
   cy.visit('/')
   /* eslint-disable-next-line cypress/no-unnecessary-waiting */
   cy.wait(1000)
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('starts with zero items', () => {
-  // start Cypress network server
-  // spy on route `GET /todos`
-  // THEN visit the page
+it('从零个待办开始', () => {
+  //启动 Cypress 网络服务
+  // 监控路由 `GET /todos`
+  // 然后再 访问该页面
   cy.intercept('GET', '/todos').as('todos')
   cy.visit('/')
-  cy.wait('@todos') // wait for `GET /todos` response
-    // inspect the server's response
+  cy.wait('@todos') // 等待 `GET /todos` 响应
+    // 检查服务响应
     .its('response.body')
     .should('have.length', 0)
-  // then check the DOM
-  // note that we don't have to use "cy.wait(...).then(...)"
-  // because all Cypress commands are flattened into a single chain
-  // automatically. Thus just write "cy.wait(); cy.get();" naturally
+  // 然后检查 DOM
+  // 注意，我们不需要使用 "cy.wait(...).then(...)" 方式
+  // 因为所有Cypress 命令都自动被扁平化连接成一条链
+  // 因此只需要自然方式的 写 "cy.wait(); cy.get();"
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('starts with zero items (stubbed response)', () => {
-  // start Cypress network server
-  // spy on route `GET /todos`
-  // THEN visit the page
+it('从零个待办开始(stubbed response)', () => {
+  // 监视路由  `GET /todos`
+  // 然后访问该页面
   cy.intercept('GET', '/todos', []).as('todos')
   cy.visit('/')
-  cy.wait('@todos') // wait for `GET /todos` response
-    // inspect the server's response
+  cy.wait('@todos') // 等待 `GET /todos` 响应
+    // 检查服务响应
     .its('response.body')
     .should('have.length', 0)
-  // then check the DOM
+  // 然后检查DOM
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('starts with zero items (fixture)', () => {
-  // stub route `GET /todos`, return data from fixture file
-  // THEN visit the page
+it('从零个待办开始 (fixture)', () => {
+  // 模拟路由 `GET /todos`, 返回来自 fixture 文件的数据
+  // 然后访问该页面
   cy.intercept('GET', '/todos', { fixture: 'empty-list.json' }).as('todos')
   cy.visit('/')
-  cy.wait('@todos') // wait for `GET /todos` response
-    // inspect the server's response
+  cy.wait('@todos') // 等待 `GET /todos` 响应
+    // 检查服务响应
     .its('response.body')
     .should('have.length', 0)
-  // then check the DOM
+  // 然后检查DOM
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('posts new item to the server', () => {
+it('将新待办发送到服务器', () => {
   cy.intercept('POST', '/todos').as('new-item')
   cy.visit('/')
   cy.get('.new-todo').type('test api{enter}')
@@ -66,7 +67,7 @@ it('posts new item to the server', () => {
   })
 })
 
-it('posts new item to the server response', () => {
+it('将新待办发送到服务器', () => {
   cy.intercept('POST', '/todos').as('new-item')
   cy.visit('/')
   cy.get('.new-todo').type('test api{enter}')
@@ -76,13 +77,13 @@ it('posts new item to the server response', () => {
   })
 })
 
-it('loads several items from a fixture', () => {
-  // stub route `GET /todos` with data from a fixture file
-  // THEN visit the page
+it('从一个fixture中加载若干待办', () => {
+  // 模拟路由 `GET /todos` ，返回来自 fixture 文件的数据
+  // 然后访问该页面
   cy.intercept('GET', '/todos', { fixture: 'two-items' })
   cy.visit('/')
-  // then check the DOM: some items should be marked completed
-  // we can do this in a variety of ways
+  // 然后检查DOM: 有些待办应该标注 completed
+  // 我们可以用多种方式来做这件事
   cy.get('li.todo').should('have.length', 2)
   cy.get('li.todo.completed').should('have.length', 1)
   cy.contains('.todo', 'first item from fixture')
@@ -94,9 +95,9 @@ it('loads several items from a fixture', () => {
     .should('be.checked')
 })
 
-it('handles 404 when loading todos', () => {
-  // when the app tries to load items
-  // set it up to fail
+it('当加载todos时处理404', () => {
+  // 当应用程序试图加载待办时，
+  // 设置成失败
   cy.intercept(
     {
       method: 'GET',
@@ -109,22 +110,21 @@ it('handles 404 when loading todos', () => {
     }
   )
   cy.visit('/', {
-    // spy on console.error because we expect app would
-    // print the error message there
+    // 监视console.error，因为我们知道 应用程序会打印错误消息
     onBeforeLoad: (win) => {
       cy.spy(win.console, 'error').as('console-error')
     }
   })
-  // observe external effect from the app - console.error(...)
+  // 观察应用程序的外部效果 - console.error(...)
   cy.get('@console-error').should(
     'have.been.calledWithExactly',
     'test does not allow it'
   )
 })
 
-it('shows loading element', () => {
-  // delay XHR to "/todos" by a few seconds
-  // and respond with an empty list
+it('显示加载中元素', () => {
+  // 将XHR的"/todos"延迟几秒钟
+  // 然后用一个空列表来回应
   cy.intercept(
     {
       method: 'GET',
@@ -137,17 +137,17 @@ it('shows loading element', () => {
   ).as('loading')
   cy.visit('/')
 
-  // shows Loading element
+  // 显示加载中元素
   cy.get('.loading').should('be.visible')
 
-  // wait for the network call to complete
+  // 等待网络调用完成
   cy.wait('@loading')
 
-  // now the Loading element should go away
+  // 现在加载中元素应该消失了
   cy.get('.loading').should('not.be.visible')
 })
 
-it('handles todos with blank title', () => {
+it('处理带有空白标题的待办事项', () => {
   cy.intercept('GET', '/todos', [
     {
       id: '123',

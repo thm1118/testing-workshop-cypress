@@ -1,5 +1,5 @@
 /**
- * Sets the database to the empty list of todos
+ * 将数据库设置为待办事项的空列表
  */
 export const resetDatabase = () => {
   console.log('resetDatabase')

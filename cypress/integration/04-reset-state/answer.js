@@ -8,7 +8,7 @@ const addItem = (text) => {
 }
 
 describe('reset data using XHR call', () => {
-  // you can use separate "beforeEach" hooks or a single one
+  // 你可以使用单独的"beforeEach"钩子，也可以合并使用一个
   beforeEach(() => {
     cy.request('POST', '/reset', {
       todos: []
@@ -18,48 +18,47 @@ describe('reset data using XHR call', () => {
     cy.visit('/')
   })
 
-  it('adds two items', () => {
+  it('添加两个待办', () => {
     addItem('first item')
     addItem('second item')
     cy.get('li.todo').should('have.length', 2)
   })
 })
 
-describe('reset data using cy.writeFile', () => {
+describe('使用 cy.writeFile 重置数据', () => {
   beforeEach(() => {
     const emptyTodos = {
       todos: []
     }
     const str = JSON.stringify(emptyTodos, null, 2) + '\n'
-    // file path is relative to the project's root folder
-    // where cypress.json is located
+    // 文件路径相对于项目的根目录，根目录下有 cypress.json
     cy.writeFile('todomvc/data.json', str, 'utf8')
     cy.visit('/')
   })
 
-  it('adds two items', () => {
+  it('添加两个待办', () => {
     addItem('first item')
     addItem('second item')
     cy.get('li.todo').should('have.length', 2)
   })
 })
 
-describe('reset data using a task', () => {
+describe('使用一个 task 重置数据', () => {
   beforeEach(() => {
     cy.task('resetData')
     cy.visit('/')
     cy.get('li.todo').should('have.length', 0)
   })
 
-  it('adds two items', () => {
+  it('添加两个待办', () => {
     addItem('first item')
     addItem('second item')
     cy.get('li.todo').should('have.length', 2)
   })
 })
 
-describe('set initial data', () => {
-  it('sets data to complex object right away', () => {
+describe('设置初始数据', () => {
+  it('即时设置数据', () => {
     cy.task('resetData', {
       todos: [
         {
@@ -71,18 +70,18 @@ describe('set initial data', () => {
     })
 
     cy.visit('/')
-    // check what is rendered
+    // 检查渲染的内容
     cy.get('li.todo').should('have.length', 1)
   })
 
-  it('sets data using fixture', () => {
+  it('使用fixture 设置数据', () => {
     cy.fixture('two-items').then((todos) => {
-      // "todos" is an array
+      // "todos" 是个数组
       cy.task('resetData', { todos })
     })
 
     cy.visit('/')
-    // check what is rendered
+    // 检查渲染的内容
     cy.get('li.todo').should('have.length', 2)
   })
 })

@@ -3,14 +3,13 @@
 import { resetDatabase, resetDatabaseTo } from '../../support/utils'
 import twoItems from '../../fixtures/two-items.json'
 
-// this spec shows several "gotchas" our users experience
-// when using cy.intercept method
-// read https://glebbahmutov.com/blog/cypress-intercept-problems/
+// 这个spec 展示了当使用cy.intercept方法时，用户体验的几个“陷阱”
+// 阅读 https://glebbahmutov.com/blog/cypress-intercept-problems/
 
 describe('intercept', () => {
   context('late registration', () => {
-    // this test is skipped on purpose.
-    // It registers the intercept AFTER the ajax call is already in progress
+    // 这个测试是故意跳过的.
+    // 它注册拦截时，ajax已经被调用执行中
     it.skip('is registered too late', () => {
       cy.visit('/')
       cy.intercept('/todos').as('todos')
@@ -24,19 +23,19 @@ describe('intercept', () => {
     })
   })
 
-  context('wait followed by get', () => {
+  context('wait 后面跟随 get', () => {
     it('is taken by the wait (fixed in Cypress v6.2.0)', () => {
       cy.intercept('/todos').as('todos')
       cy.visit('/')
       cy.wait('@todos')
-      // verify the loaded todos
+      // 验证已加载的待办事项
       cy.get('@todos').should('not.be.null').and('include', {
         responseWaited: true
-        // can verify other known properties
+        // 可以验证其他已知属性
       })
     })
 
-    it('using deprecated cy.route', () => {
+    it('使用弃用的 cy.route', () => {
       cy.server()
       cy.route('/todos').as('todos')
       cy.visit('/')
@@ -44,7 +43,7 @@ describe('intercept', () => {
       cy.get('@todos').should('not.be.null')
     })
 
-    it('should use wait value', () => {
+    it('应该使用等待值', () => {
       cy.intercept('/todos').as('todos')
       cy.visit('/')
       cy.wait('@todos').should('include.all.keys', ['request', 'response'])
@@ -60,8 +59,8 @@ describe('intercept', () => {
     })
   })
 
-  context('dynamic alias', () => {
-    it('sets the alias after inspecting the request', () => {
+  context('动态别名', () => {
+    it('在检查请求后设置别名', () => {
       cy.intercept('*', (req) => {
         if (req.method === 'GET' && req.url.endsWith('/todos')) {
           req.alias = 'todos'
@@ -72,7 +71,7 @@ describe('intercept', () => {
       cy.wait('@todos')
     })
 
-    it('creates random alias', () => {
+    it('创建随机别名', () => {
       let alias = ''
       cy.intercept('GET', '/todos', (req) => {
         alias = 'get-todos-' + Cypress._.random(1e6)
@@ -92,10 +91,10 @@ describe('intercept', () => {
     })
   })
 
-  context('cached data', () => {
-    // this test might pass or not when the DevTools is open
-    // depending on the Network "Disable cache" setting
-    it.skip('does not have response', () => {
+  context('已缓存的数据', () => {
+    // 当DevTools打开时，这个测试可能通过，也可能不通过
+    // 取决于网络面板中 "Disable cache" 的设置
+    it.skip('没有响应', () => {
       cy.intercept('/todos').as('todos')
       cy.visit('/')
       cy.wait('@todos').its('response').should('deep.include', {
@@ -105,7 +104,7 @@ describe('intercept', () => {
       })
     })
 
-    it('always gets the new data', () => {
+    it('总是获得新数据', () => {
       cy.intercept('/todos', (req) => {
         delete req.headers['if-none-match']
       }).as('todos')
@@ -125,8 +124,8 @@ describe('intercept', () => {
     })
   })
 
-  context('multiple intercepts', () => {
-    describe('using just spies', () => {
+  context('多个拦截', () => {
+    describe('仅使用监视', () => {
       beforeEach(resetDatabase)
 
       beforeEach(() => {
@@ -145,7 +144,7 @@ describe('intercept', () => {
       })
     })
 
-    describe('using stub and spy', () => {
+    describe('使用模拟和监视', () => {
       beforeEach(() => {
         cy.intercept('GET', '/todos', []).as('todos') // stub
         cy.visit('/')
@@ -163,8 +162,8 @@ describe('intercept', () => {
     })
   })
 
-  context('common headers', () => {
-    // let's say that every intercept needs the same headers in the response
+  context('常规 headers', () => {
+    // 假设每个拦截在响应中都需要相同的头信息
     const headers = {
       'access-control-allow-origin': Cypress.config('baseUrl'),
       'Access-Control-Allow-Credentials': 'true'
@@ -174,7 +173,7 @@ describe('intercept', () => {
       return Object.assign({}, { headers }, options)
     }
 
-    it('stubs several requests and has the headers', () => {
+    it('模拟数个请求，并有头部', () => {
       // the initial list of todo items
       cy.intercept(
         'GET',
@@ -192,8 +191,8 @@ describe('intercept', () => {
     })
   })
 
-  context('no overwriting interceptors', () => {
-    describe('overwrite does not work', () => {
+  context('没有覆盖拦截器', () => {
+    describe('覆盖不起作用', () => {
       beforeEach(() => {
         cy.intercept('GET', '/todos', []) // start with zero todos
         cy.visit('/')
@@ -218,7 +217,7 @@ describe('intercept', () => {
       })
     })
 
-    describe('separate tests and hooks', () => {
+    describe('分离测试和钩子', () => {
       context('start with zero todos', () => {
         beforeEach(() => {
           cy.intercept('GET', '/todos', [])
@@ -252,10 +251,10 @@ describe('intercept', () => {
     })
   })
 
-  context('no Cypress commands inside the interceptor', () => {
+  context('拦截器里没有Cypress 命令', () => {
     beforeEach(resetDatabase)
 
-    it.skip('tries to use cy.writeFile', () => {
+    it.skip('尝试使用 cy.writeFile', () => {
       cy.visit('/')
       cy.intercept('POST', '/todos', (req) => {
         console.log('POST /todo', req)
@@ -265,7 +264,7 @@ describe('intercept', () => {
       cy.get('.new-todo').type('an example{enter}')
     })
 
-    it('saves it later', () => {
+    it('之后保存', () => {
       let body
 
       cy.visit('/')
@@ -286,7 +285,7 @@ describe('intercept', () => {
     })
   })
 
-  context('return different data for 2nd request', () => {
+  context('为第二个请求返回不同的数据', () => {
     it.skip('returns list with more items on page reload (does not work)', () => {
       // we start with 2 items in the list
       cy.intercept('GET', '/todos', twoItems)
@@ -311,7 +310,7 @@ describe('intercept', () => {
       cy.get('.todo').should('have.length', 3)
     })
 
-    it('returns list with more items on page reload', () => {
+    it('在页面重新加载时返回包含更多项的列表', () => {
       const item = {
         title: 'Third item',
         completed: false,
@@ -337,7 +336,7 @@ describe('intercept', () => {
     })
   })
 
-  context('overwrite interceptors', () => {
+  context('覆盖拦截器', () => {
     beforeEach(function resetIntercepts() {
       Cypress.config('intercepts', {})
     })
@@ -395,9 +394,9 @@ describe('intercept', () => {
     })
   })
 
-  context('single use intercept', () => {
+  context('单个拦截', () => {
     beforeEach(() => {
-      // let's reset the server to always have 2 todos
+      // 将服务重置为总是有2个待办事项
       resetDatabaseTo('two-items.json')
     })
 
@@ -438,7 +437,7 @@ describe('intercept', () => {
       })
     }
 
-    it('stubs the first load and does nothing after that', () => {
+    it('第一次加载时模拟，之后不模拟', () => {
       // this test wants to have no todos at first
       interceptOnce('GET', '/todos', []).as('todos')
       cy.visit('/')
@@ -470,31 +469,31 @@ describe('intercept', () => {
     })
   })
 
-  context('network idle', () => {
+  context('网络空闲', () => {
     beforeEach(() => {
       // let's reset the server to always have 2 todos
       resetDatabaseTo('two-items.json')
     })
 
-    it('waits for network to be idle for 1 second', () => {
+    it('等待网络空闲1秒', () => {
       let lastNetworkAt
       cy.intercept('*', () => {
         lastNetworkAt = +new Date()
       })
-      // load the page, but delay loading of the data
+      // 加载页面，但延迟加载数据
       cy.visit('/?delay=800')
 
       // wait for network to be idle for 1 second
       const started = +new Date()
-      cy.wrap('network idle for 1 sec').should(() => {
+      cy.wrap('网络空闲1秒').should(() => {
         const t = lastNetworkAt || started
         const elapsed = +new Date() - t
         if (elapsed < 1000) {
-          throw new Error('Network is busy')
+          throw new Error('网络繁忙')
         }
       })
-      // by now everything should have been loaded
-      // we can check by using very short timeout
+      // 到现在为止，所有的东西都应该加载好了
+      // 我们可以使用很短的超时来检查
       cy.get('.todo-list li', { timeout: 10 }).should('have.length', 2)
     })
   })

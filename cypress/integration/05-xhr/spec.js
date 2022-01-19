@@ -1,109 +1,99 @@
 /// <reference types="cypress" />
 //
-// note, we are not resetting the server before each test
-// and we want to confirm that IF the application has items already
-// (for example add them manually using the browser localhost:3000)
-// then these tests fail!
+// 注意，我们不会在每次测试前重新设置服务
+// 并且我们想确认如果应用程序已经有待办，这些测试就会失败
+// (例如，使用浏览器访问 localhost:3000，手动添加它们)
 //
 // see https://on.cypress.io/intercept
 
 /* eslint-disable no-unused-vars */
 
-it('starts with zero items (waits)', () => {
+it('从零个待办开始 (等待)', () => {
   cy.visit('/')
-  // wait 1 second
-  // then check the number of items
+  // 等待1秒
+  // 然后检查待办的数量
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('starts with zero items', () => {
-  // start Cypress network proxy with cy.server()
-  // spy on route `GET /todos`
-  //  with cy.intercept(...).as(<alias name>)
-  // THEN visit the page
+it('从零个待办开始', () => {
+  // 启动 Cypress 网络服务
+  //  使用 cy.intercept(...).as(<alias name>) 监控路由 `GET /todos`
+  // 然后再 访问该页面
   cy.visit('/')
-  // wait for `GET /todos` route
-  //  using "@<alias name>" string
-  // then check the DOM
+  //  通过 "@<alias name>" 别名字符串 等待 路由 `GET /todos`
+  // 然后检查 DOM
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('starts with zero items (stubbed response)', () => {
-  // start Cypress network server
-  // stub `GET /todos` with []
-  // save the stub as an alias
+it('从零个待办开始 (模拟响应response)', () => {
+  // 模拟 `GET /todos` 响应为空数组 []
+  // 并保存为一个 别名
 
-  // THEN visit the page
+  // 然后访问该页面
   cy.visit('/')
 
-  // wait for the route alias
-  // grab its response body
-  // and make sure the body is an empty list
+  // 等待路由别名获取其响应body
+  // 确保body是一个空列表
 })
 
-it('starts with zero items (fixture)', () => {
-  // start Cypress network server
-  // stub `GET /todos` with fixture "empty-list"
+it('从零个待办开始 (fixture)', () => {
+  // 模拟 `GET /todos` ，通过 fixture "empty-list"
 
-  // visit the page
+  // 访问该页面
   cy.visit('/')
 
-  // then check the DOM
+  // 然后检查DOM
   cy.get('li.todo').should('have.length', 0)
 })
 
-it('loads several items from a fixture', () => {
-  // stub route `GET /todos` with data from a fixture file "two-items.json"
-  // THEN visit the page
+it('从一个fixture中加载若干待办', () => {
+  // 模拟 `GET /todos` ，使用来自 fixture 文件 "two-items.json" 的数据
+  // 然后访问该页面
   cy.visit('/')
-  // then check the DOM: some items should be marked completed
-  // we can do this in a variety of ways
+  // 然后检查DOM:一些待办应该被标记为完成
+  // 我们可以用多种方式来做这件事
 })
 
-it('posts new item to the server', () => {
-  // spy on "POST /todos", save as alias
+it('将新待办发送到服务器', () => {
+  // 监视 "POST /todos", 保存为别名
   cy.visit('/')
   cy.get('.new-todo').type('test api{enter}')
 
-  // wait on XHR call using the alias, grab its request or response body
-  // and make sure it contains
-  // {title: 'test api', completed: false}
-  // hint: use cy.wait(...).its(...).should('have.contain', ...)
+  // 使用别名等待XHR调用, 获取其请求或响应body
+  // 确定它包含 {title: 'test api', completed: false}
+  // 提示: use cy.wait(...).its(...).should('have.contain', ...)
 })
 
-it('handles 404 when loading todos', () => {
-  // when the app tries to load items
-  // set it up to fail with 404 to GET /todos
-  // after delay of 2 seconds
+it('', () => {
+  // 当应用程序试图加载待办时，
+  // 将GET /todos设置为失败，延时2秒后返回404
   cy.visit('/', {
-    // spy on console.error because we expect app would
-    // print the error message there
+    // 监视console.error，因为我们知道 应用程序会打印错误消息
     onBeforeLoad: (win) => {
       // spy
     }
   })
-  // observe external effect from the app - console.error(...)
+  // 观察应用程序的外部效果 - console.error(...)
   // cy.get('@console-error')
   //   .should(...)
 })
 
-it('shows loading element', () => {
-  // delay XHR to "/todos" by a few seconds
-  // and respond with an empty list
-  // shows Loading element
-  // wait for the network call to complete
-  // now the Loading element should go away
+it('显示加载中元素', () => {
+  // 将XHR的"/todos"延迟几秒钟
+  // 然后用一个空列表来回应
+  // 显示加载中元素
+  // 等待网络调用完成
+  // 现在加载中元素应该消失了
 })
 
-it('handles todos with blank title', () => {
-  // return a list of todos with one todo object
-  // having blank spaces or null
-  // confirm the todo item is shown correctly
+it('处理带有空白标题的待办事项', () => {
+  // 返回只有一个待办的的todo列表
+  // 这个待办的标题为空或null
+  // 确认这个待办正确显示
 })
 
 it('waits for network to be idle for 1 second', () => {
-  // intercept all requests
-  // on every intercept set the timestamp
-  // retry using should(cb) checking the time
-  // that has passed since the network timestamp
+  // 拦截所有请求
+  // 在每次截获中设置时间戳
+  // 重试使用 should(cb)检查 自有网络时间戳以来，已经过去的时间
 })

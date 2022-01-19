@@ -15,52 +15,51 @@ describe('reset data using XHR call', () => {
     cy.visit('/')
   })
 
-  it('adds two items', () => {
+  it('添加两个待办', () => {
     addItem('first item')
     addItem('second item')
     cy.get('li.todo').should('have.length', 2)
   })
 })
 
-describe('reset data using cy.writeFile', () => {
+describe('使用 cy.writeFile 重置数据', () => {
   beforeEach(() => {
-    // TODO write file "todomvc/data.json" with stringified todos object
-    // file path is relative to the project's root folder
-    // where cypress.json is located
+    // TODO 用文化的todos 对象 写入文件 "todomvc/data.json"
+    // 文件路径相对于项目的根目录，根目录下有 cypress.json
     cy.visit('/')
   })
 
-  it('adds two items', () => {
+  it('添加两个待办', () => {
     addItem('first item')
     addItem('second item')
     cy.get('li.todo').should('have.length', 2)
   })
 })
 
-describe('reset data using a task', () => {
+describe('使用一个 task 重置数据', () => {
   beforeEach(() => {
-    // TODO call a task to reset data
+    // TODO 调用一个 task 重置数据
     cy.visit('/')
   })
 
-  it('adds two items', () => {
+  it('添加两个待办', () => {
     addItem('first item')
     addItem('second item')
     cy.get('li.todo').should('have.length', 2)
   })
 })
 
-describe('set initial data', () => {
-  it('sets data to complex object right away', () => {
-    // TODO call task and pass an object with todos
+describe('设置初始数据', () => {
+  it('即时设置数据', () => {
+    // TODO 调用 task 传递 todos
     cy.visit('/')
-    // check what is rendered
+    // 检查渲染的内容
   })
 
-  it('sets data using fixture', () => {
-    // TODO load todos from "cypress/fixtures/two-items.json"
-    // and then call the task to set todos
+  it('使用fixture 设置数据', () => {
+    // TODO 从文件 "cypress/fixtures/two-items.json" 加载 todos
+    // 在调用task 设置 todos
     cy.visit('/')
-    // check what is rendered
+    // 检查渲染的内容
   })
 })
