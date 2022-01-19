@@ -17,12 +17,12 @@ describe('retry-ability', () => {
       .type('todo C{enter}')
       .type('todo D{enter}')
     cy.contains('ul', 'todo A')
-      // confirm that the above element
-      //  1. is visible
+      // 确认上述元素
+      //  1. 是可见的
       .should('be.visible')
-      // 2. has class "todo-list"
+      // 2. 有样式类 "todo-list"
       .and('have.class', 'todo-list')
-      // 3. css property "list-style-type" is equal "none"
+      // 3. css 属性 "list-style-type" 等于 "none"
       .and('have.css', 'list-style-type', 'none')
   })
 
@@ -33,7 +33,7 @@ describe('retry-ability', () => {
       .type('todo C{enter}')
       .type('todo D{enter}')
     cy.contains('ul', 'todo A').should(($ul) => {
-      // use TDD assertions
+      // 使用TDD断言
       // $ul is visible
       // $ul has class "todo-list"
       // $ul css has "list-style-type" = "none"
@@ -44,15 +44,15 @@ describe('retry-ability', () => {
     })
   })
 
-  it('every item starts with todo', function () {
+  it('每个待办都以todo开头', function () {
     cy.get('.new-todo')
       .type('todo A{enter}')
       .type('todo B{enter}')
       .type('todo C{enter}')
       .type('todo D{enter}')
     cy.get('.todo label').should(($labels) => {
-      // confirm that there are 4 labels
-      // and that each one starts with "todo-"
+      // 确认有4个标签
+      // 每一个都是以 "todo-"起始
       expect($labels).to.have.length(4)
 
       $labels.each((k, el) => {
@@ -76,10 +76,10 @@ describe('retry-ability', () => {
       .should('contain', 'todo A') // assertion
   })
 
-  // flaky test - can pass or not depending on the app's speed
-  // to make the test flaky add the timeout
-  // in todomvc/app.js "addTodo({ commit, state })" method
-  it('has two labels', () => {
+  // 不可靠的测试——能否通过取决于应用程序的速度
+  // 要使测试不稳定，请添加超时
+  // 在 todomvc/app.js "addTodo({ commit, state })" 方法
+  it('有两个标签', () => {
     cy.get('.new-todo').type('todo A{enter}')
     cy.get('.todo-list li') // command
       .find('label') // command
@@ -91,7 +91,7 @@ describe('retry-ability', () => {
       .should('contain', 'todo B') // assertion
   })
 
-  it('solution 1: merges queries', () => {
+  it('解决办法 1: 合并查询', () => {
     cy.get('.new-todo').type('todo A{enter}')
     cy.get('.todo-list li label') // command
       .should('contain', 'todo A') // assertion
@@ -101,7 +101,7 @@ describe('retry-ability', () => {
       .should('contain', 'todo B') // assertion
   })
 
-  it('solution 2: alternate commands and assertions', () => {
+  it('解决办法 2: 交替命令和断言', () => {
     cy.get('.new-todo').type('todo A{enter}')
     cy.get('.todo-list li') // command
       .should('have.length', 1) // assertion
@@ -116,7 +116,7 @@ describe('retry-ability', () => {
   })
 
   it('retries reading the JSON file', () => {
-    // note cy.readFile retries reading the file until the should(cb) passes
+    // 注意 cy.readFile 会重试读取文件，直到should(cb) 通过
     // https://on.cypress.io/readfile
     cy.get('.new-todo')
       .type('todo A{enter}')
@@ -134,34 +134,34 @@ describe('retry-ability', () => {
   })
 })
 
-describe('Careful with negative assertions', { retries: 2 }, () => {
+describe('小心 否定断言', { retries: 2 }, () => {
   beforeEach(function resetData() {
     // cy.intercept('/todos', { body: [], delayMs: 5000 })
   })
 
-  // this assertion can pass - but for the wrong reason
-  // the indicator initially is NOT shown, thus this assertion
-  // pass immediately, and probably not when the app finishes loading
-  it('hides the loading element', () => {
+  // 这个断言可以通过—— 但却是由于错误的原因
+  // 加载指示器最初不会显示，因此这一断言会快速通过
+  // 当应用程序完成加载时，却可能不会通过
+  it('加载中元素不可见', () => {
     cy.visit('/')
     cy.get('.loading').should('not.be.visible')
   })
 
-  it('uses negative assertion and passes for the wrong reason', () => {
+  it('使用否定断言，并出于错误的原因通过', () => {
     cy.visit('/?delay=3000')
     cy.get('.loading').should('not.be.visible')
   })
 
-  // NOTE: skipping because it is flakey and slowing down the request is better
-  it.skip('use positive then negative assertion (flakey)', () => {
+  // 注意: 跳过因为它是不可靠的，放慢请求会更好
+  it.skip('先使用肯定断言，然后使用否定断言(不可靠)', () => {
     cy.visit('/?delay=3000')
-    // first, make sure the loading indicator shows up (positive assertion)
+    // 首先，确保加载指示器显示(肯定断言)
     cy.get('.loading').should('be.visible')
-    // then assert it goes away (negative assertion)
+    // 然后断言它应该消失 (否定断言)
     cy.get('.loading').should('not.be.visible')
   })
 
-  it('uses cy.route to slow down network response', () => {
+  it('使用 cy.route 减速网络响应', () => {
     cy.server()
     cy.route({
       method: 'GET',
@@ -170,25 +170,25 @@ describe('Careful with negative assertions', { retries: 2 }, () => {
       delay: 2000
     })
     cy.visit('/?delay=3000')
-    // first, make sure the loading indicator shows up (positive assertion)
+    // 首先，确保加载指示器显示 (肯定断言)
     cy.get('.loading').should('be.visible')
-    // then assert it goes away (negative assertion)
+    // 然后断言它会消失(否定断言)
     cy.get('.loading').should('not.be.visible')
   })
 
-  it('slows down the network response', () => {
+  it('降低网络响应速度', () => {
     cy.intercept('/todos', {
       body: [],
       delayMs: 1000
     })
     cy.visit('/?delay=1000')
-    // first, make sure the loading indicator shows up (positive assertion)
+    // 首先，确保加载指示器显示 (肯定断言)
     cy.get('.loading').should('be.visible')
-    // then assert it goes away (negative assertion)
+    // 然后断言它会消失(否定断言)
     cy.get('.loading').should('not.be.visible')
   })
 
-  it('slows down the network response (programmatic)', () => {
+  it('降低网络响应速度(编程方式)', () => {
     cy.intercept('/todos', (req) => {
       req.reply({
         body: [],
@@ -196,42 +196,41 @@ describe('Careful with negative assertions', { retries: 2 }, () => {
       })
     })
     cy.visit('/?delay=1000')
-    // first, make sure the loading indicator shows up (positive assertion)
+    // 首先，确保加载指示器显示 (肯定断言)
     cy.get('.loading').should('be.visible')
-    // then assert it goes away (negative assertion)
+    // 然后断言它会消失(否定断言)
     cy.get('.loading').should('not.be.visible')
   })
 })
 
-describe('aliases', () => {
-  context('are reset before each test', () => {
+describe('别名', () => {
+  context('每次测试前重置别名', () => {
     before(() => {
       cy.wrap('some value').as('exampleValue')
     })
 
-    it('works in the first test', () => {
+    it('在第一个测试中有效', () => {
       cy.get('@exampleValue').should('equal', 'some value')
     })
 
-    // NOTE the second test is failing because the alias is reset
-    it.skip('does not exist in the second test', () => {
-      // there is not alias because it is created once before
-      // the first test, and is reset before the second test
+    // 第二次测试失败，因为别名已经被重置了
+    it.skip('在第二个测试中不存在别名', () => {
+      // 没有别名，因为它在第一个测试之前创建一次，并在第二个测试之前重置
       cy.get('@exampleValue').should('equal', 'some value')
     })
   })
 
-  context('should be created before each test', () => {
+  context('应该在每次测试之前创建', () => {
     beforeEach(() => {
-      // we will create a new alias before each test
+      // 我们将在每次测试之前创建一个新的别名
       cy.wrap('some value').as('exampleValue')
     })
 
-    it('works in the first test', () => {
+    it('在第一个测试中有效', () => {
       cy.get('@exampleValue').should('equal', 'some value')
     })
 
-    it('works in the second test', () => {
+    it('在第二个测试中有效', () => {
       cy.get('@exampleValue').should('equal', 'some value')
     })
   })

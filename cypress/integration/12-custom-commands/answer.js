@@ -6,7 +6,7 @@ import { resetData, visitSite } from '../../support/utils'
 beforeEach(resetData)
 beforeEach(visitSite)
 
-it('enters 10 todos', function () {
+it('输入10个待办', function () {
   cy.get('.new-todo')
     .type('todo 0{enter}')
     .type('todo 1{enter}')
@@ -21,18 +21,18 @@ it('enters 10 todos', function () {
   cy.get('.todo').should('have.length', 10)
 })
 
-// simple custom command
+// 简单的自定义命令
 Cypress.Commands.add('createTodo', (todo) => {
   cy.get('.new-todo').type(`${todo}{enter}`)
 })
 
-// with better command log
+// 让命令有更好的命令日志
 Cypress.Commands.add('createTodo', (todo) => {
   cy.get('.new-todo', { log: false }).type(`${todo}{enter}`, { log: false })
   cy.log('createTodo', todo)
 })
 
-// with full command log
+// 使用完整的命令日志
 Cypress.Commands.add('createTodo', (todo) => {
   const cmd = Cypress.log({
     name: 'create todo',
@@ -51,11 +51,11 @@ Cypress.Commands.add('createTodo', (todo) => {
     })
 })
 
-it('creates a todo', () => {
+it('创建一个待办', () => {
   cy.createTodo('my first todo')
 })
 
-it('passes when object gets new property', () => {
+it('当对象获得新属性时通过测试', () => {
   const o = {}
   setTimeout(() => {
     o.foo = 'bar'

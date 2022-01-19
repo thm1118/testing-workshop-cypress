@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 /**
- * Adds a todo item
+ * 添加一个待办
  * @param {string} text
  */
 const addItem = (text) => {
@@ -31,7 +31,7 @@ describe('App Data Store', { retries: 2 }, () => {
   })
 
   afterEach(function () {
-    // makes debugging failing tests much simpler
+    // 使调试失败的测试更加简单
     cy.screenshot(this.currentTest.fullTitle())
   })
 

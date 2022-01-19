@@ -10,14 +10,14 @@ beforeEach(() => {
   cy.visit('/')
 })
 /**
- * Adds a todo item
+ * 添加一个待办
  * @param {string} text
  */
 const addItem = (text) => {
   cy.get('.new-todo').type(`${text}{enter}`)
 }
 
-it('adds items to store', () => {
+it('将待办添加到存储', () => {
   addItem('something')
   addItem('something else')
   // get application's window

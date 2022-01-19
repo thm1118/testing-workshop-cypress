@@ -9,7 +9,7 @@ beforeEach(function visitSite() {
   cy.visit('/')
 })
 
-it('enters 10 todos', function () {
+it('输入10个待办', function () {
   cy.get('.new-todo')
     .type('todo 0{enter}')
     .type('todo 1{enter}')
@@ -26,18 +26,17 @@ it('enters 10 todos', function () {
 
 // it('creates a todo')
 
-it.skip('passes when object gets new property', () => {
+it.skip('当对象获得新属性时通过测试', () => {
   const o = {}
   setTimeout(() => {
     o.foo = 'bar'
   }, 1000)
-  // TODO write "get" that returns the given property
-  // from an object.
+  // TODO 编写 "get" ，用来返回 一个对象给定的属性
   // cy.wrap(o).pipe(get('foo'))
-  // add assertions
+  // 添加断言
 })
 
-it('creates todos', () => {
+it('创建多个待办', () => {
   cy.get('.new-todo')
     .type('todo 0{enter}')
     .type('todo 1{enter}')
